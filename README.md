@@ -2,6 +2,9 @@
 
 > A minimal vue admin template with Element UI & axios & iconfont & permission control & lint
 
+## demo url 
+https://hswyxj.github.io/admin_demo/
+
 ## Build Setup
 
 ```bash
