@@ -29,7 +29,6 @@
         <el-form-item label="角色密码">
           <el-input v-model="role.password" placeholder="Role password"/>
         </el-form-item>
-        <!-- <el-form-item label="描述"> -->
         <el-form-item label="角色描述">
           <el-input
             v-model="role.description"
@@ -40,7 +39,6 @@
         <el-form-item label="权限菜单">
           <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps" show-checkbox node-key="path" class="permission-tree"/>
         </el-form-item>
-      <!-- </el-form-item> -->
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">取消</el-button>
