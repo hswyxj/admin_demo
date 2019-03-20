@@ -24,7 +24,7 @@ npm run build
 npm run build --report
 ```
 
-
+```
 - ├── build                      // 构建相关
 - ├── config                     // 配置相关
 - ├── docs                       // 项目build打包的最终产物（不用管）
@@ -67,5 +67,5 @@ npm run build --report
 - ├── favicon.ico                // favicon图标
 - ├── index.html                 // html模板
 - └── package.json               // package.json
-
+```
 
