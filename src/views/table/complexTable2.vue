@@ -236,6 +236,8 @@ export default {
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
+        this.mockLists = response.data.mockList // 导出所有数据源
+        // console.log(this.mockLists)
 
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -244,7 +246,7 @@ export default {
       })
     },
     handleFilter() {
-      this.listQuery.page = 1
+      // this.listQuery.page = 1
       this.getList()
     },
     handleModifyStatus(row, status) {
@@ -378,7 +380,9 @@ export default {
             // 根据后端返回类型前端提示
             this.$message({
               message: '删除成功',
-              type: 'success'
+              type: 'success',
+              duration: 2000
+
             })
             this.getList()
           })
@@ -391,7 +395,7 @@ export default {
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
         const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-        const data = this.formatJson(filterVal, this.list)
+        const data = this.formatJson(filterVal, this.mockLists)
         excel.export_json_to_excel({
           header: tHeader,
           data,

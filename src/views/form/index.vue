@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm">
+    <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px" style="width: 45%;" class="demo-ruleForm">
       <el-form-item label="活动名称" prop="name">
         <el-input v-model="ruleForm.name"/>
       </el-form-item>
@@ -16,7 +16,7 @@
             <el-date-picker v-model="ruleForm.date1" type="date" placeholder="选择日期" style="width: 100%;"/>
           </el-form-item>
         </el-col>
-        <el-col :span="2" class="line">-</el-col>
+        <el-col :span="2" class="line" >-</el-col>
         <el-col :span="11">
           <el-form-item prop="date2">
             <el-time-picker v-model="ruleForm.date2" type="fixed-time" placeholder="选择时间" style="width: 100%;"/>
@@ -44,8 +44,9 @@
         <el-input v-model="ruleForm.desc" type="textarea"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+        <el-button type="primary" @click="onSubmit('ruleForm')">立即创建</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -92,31 +93,33 @@ export default {
     }
   },
   methods: {
-    submitForm(formName) {
+    onSubmit(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.$message({
+            message: '提交成功 ！',
+            type: 'success'
+          })
         } else {
-          console.log('error submit!!')
+          console.log('error submit')
           return false
         }
       })
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
+      this.$message({
+        message: '重置成功',
+        type: 'warning'
+      })
+    },
+    onCancel() {
+      this.$message({
+        message: '取消了',
+        type: 'warning'
+      })
     }
   }
-  // methods: {
-  //   onSubmit() {
-  //     this.$message('提交 !')
-  //   },
-  //   onCancel() {
-  //     this.$message({
-  //       message: '取消了',
-  //       type: 'warning'
-  //     })
-  //   }
-  // }
 }
 </script>
 
@@ -125,4 +128,3 @@ export default {
   text-align: center;
 }
 </style>
-
