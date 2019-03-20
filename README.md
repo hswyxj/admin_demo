@@ -32,6 +32,12 @@ npm run build --report
 - │   ├── api                    // 所有api请求
 - │   ├── assets                 // 主题 字体等静态资源
 - │   ├── components             // 全局公用组件
+- │   │   ├── Breadcrumb               # 面包屑导航组件
+- │   │   ├── Hamburger                # 侧边栏收缩组件
+- │   │   ├── PanThumb                 # 图片hover效应组件
+- │   │   ├── Pagination               # 分页组件
+- │   │   ├── SvgIcon                  # SvgIcon组件
+- │   │   └── TextHoverEffect          # 文本hover效应组件
 - │   ├── directive              // 全局指令
 - │   ├── filters                // 全局过滤 filter
 - │   ├── icons                  // 项目所有 svg icons
@@ -39,6 +45,13 @@ npm run build --report
 - │   ├── router                 // 路由配置
 - │   ├── store                  // 全局 store管理（状态管理）
 - │   ├── styles                 // 全局样式
+- │   │   ├── btn.scss                 # 按钮样式
+- │   │   ├── element-ui.scss          # 全局自定义 element-ui 样式
+- │   │   ├── index.scss               # 全局通用样式
+- │   │   ├── mixin.scss               # 全局mixin
+- │   │   ├── sidebar.scss             # 侧边栏 css
+- │   │   ├── transition.scss          # vue transition 动画
+- │   │   └── variables.scss           # 全局变量
 - │   ├── utils                  // 全局公用方法
 - │   ├── vendor                 // 公用vendor
 - │   ├── views                  // views 所有页面
@@ -54,3 +67,5 @@ npm run build --report
 - ├── favicon.ico                // favicon图标
 - ├── index.html                 // html模板
 - └── package.json               // package.json
+
+

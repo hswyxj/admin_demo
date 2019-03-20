@@ -160,7 +160,7 @@ const calendarStatusOptions = [
   { key: 'deleted', display_name: '已删除' }
 ]
 // arr to obj ,such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = calendarStatusOptions.reduce((acc, cur) => {
+const calendarStatusKeyValue = calendarStatusOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
   return acc
 }, {})
@@ -176,7 +176,7 @@ export default {
       //   deleted: 'danger'
       // }
       // return statusMap[status]
-      return calendarTypeKeyValue[status]
+      return calendarStatusKeyValue[status]
     }
   },
   data() {
@@ -191,7 +191,7 @@ export default {
         limit: 20,
         importance: undefined,
         title: undefined,
-        type: undefined,
+        // type: undefined,
         status: undefined,
         sort: '+id'
       },
@@ -206,7 +206,7 @@ export default {
         remark: '',
         timestamp: new Date(),
         title: '',
-        type: '',
+        // type: '',
         status: 'published'
       },
       dialogFormVisible: false,
@@ -218,9 +218,9 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        // type: [{ required: true, message: 'type is required', trigger: 'change' }],
+        timestamp: [{ type: 'date', required: true, message: '请选择时间', trigger: 'change' }],
+        title: [{ required: true, message: '请输入标题', trigger: 'blur' }]
       },
       downloadLoading: false
     }
@@ -274,8 +274,8 @@ export default {
         remark: '',
         timestamp: new Date(),
         title: '',
-        status: 'published',
-        type: ''
+        status: 'published'
+        // type: ''
       }
     },
     handleCreate() {
@@ -386,6 +386,8 @@ export default {
     },
     // 导出
     handleDownload() {
+      var timestamp = new Date().getTime()
+      const nowtimes = parseTime(timestamp, '{y}-{m}-{d} {h}:{i}')
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = ['时间', '标题', '作者', '审核人', '重要性', '状态']
@@ -394,7 +396,7 @@ export default {
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: 'table-list'
+          filename: nowtimes + 'excel模板'
         })
         this.downloadLoading = false
       })

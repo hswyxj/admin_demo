@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 import { param2Obj } from '@/utils'
 
 const List = []
-const count = 100
+const count = 1000
 
 const baseContent = '<p>我是测试数据我是测试数据</p><p><img src="https://wpimg.wallstcn.com/4c69009c-0fd4-4153-b112-6cb53d1cf943"></p>'
 const image_uri = 'https://wpimg.wallstcn.com/e4558086-631c-425c-9430-56ffb46e70b3'
@@ -18,7 +18,7 @@ for (let i = 0; i < count; i++) {
     content: baseContent,
     forecast: '@float(0, 100, 2, 2)',
     importance: '@integer(1, 3)',
-    'type|1': ['CN', 'US', 'JP', 'EU'],
+    // 'type|1': ['CN', 'US', 'JP', 'EU'],
     'status|1': ['published', 'draft', 'deleted'],
     display_time: '@datetime',
     comment_disabled: true,
@@ -32,11 +32,11 @@ export default {
   getList: config => {
     // page = 1
     // const { importance, type, status, title, page = 1, limit = 20, sort } = param2Obj(config.url)
-    const { importance, type, status, title, page = 1, limit = 20, sort } = param2Obj(config.url)
+    const { importance, status, title, page = 1, limit = 20, sort } = param2Obj(config.url)
 
     let mockList = List.filter(item => {
       if (importance && item.importance !== +importance) return false
-      if (type && item.type !== type) return false
+      // if (type && item.type !== type) return false
       if (status && item.status !== status) return false
       if (title && item.title.indexOf(title) < 0) return false
       return true

@@ -58,7 +58,6 @@ export const asyncRoutes = [
     children: [
       {
         path: 'dashboard',
-        name: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         meta: { title: '首页', icon: 'dashboard' }
       }]

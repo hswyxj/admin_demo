@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px" style="width: 45%;" class="demo-ruleForm">
+    <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px" style="width: 45%; padding-top:40px;" class="demo-ruleForm">
       <el-form-item label="活动名称" prop="name">
         <el-input v-model="ruleForm.name"/>
       </el-form-item>
