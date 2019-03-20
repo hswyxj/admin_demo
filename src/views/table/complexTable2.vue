@@ -154,7 +154,6 @@ import { fetchList, fetchPv, createArticle, updateArticle, batchremoveArticle } 
 import waves from '@/directive/waves' // Waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-
 const calendarStatusOptions = [
   { key: 'published', display_name: '已发布' },
   { key: 'draft', display_name: '草稿' },
@@ -165,7 +164,6 @@ const calendarTypeKeyValue = calendarStatusOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
   return acc
 }, {})
-
 export default {
   name: 'ComplexTable',
   components: { Pagination },
@@ -238,7 +236,6 @@ export default {
         this.total = response.data.total
         this.mockLists = response.data.mockList // 导出所有数据源
         // console.log(this.mockLists)
-
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -317,7 +314,6 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-
     // 编辑-确认
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
@@ -382,7 +378,6 @@ export default {
               message: '删除成功',
               type: 'success',
               duration: 2000
-
             })
             this.getList()
           })
@@ -393,8 +388,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const tHeader = ['时间', '标题', '作者', '审核人', '重要性', '状态']
+        const filterVal = ['timestamp', 'title', 'author', 'reviewer', 'importance', 'status']
         const data = this.formatJson(filterVal, this.mockLists)
         excel.export_json_to_excel({
           header: tHeader,
@@ -415,6 +410,4 @@ export default {
     }
   }
 }
-
 </script>
-
