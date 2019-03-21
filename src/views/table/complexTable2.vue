@@ -198,7 +198,7 @@ export default {
       importanceOptions: [1, 2, 3],
       calendarStatusOptions,
       sortOptions: [{ label: 'ID正序', key: '+id' }, { label: 'ID倒序', key: '-id' }],
-      statusOptions: ['published', 'draft', 'deleted'],
+      // statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: true,
       temp: {
         id: undefined,
@@ -292,7 +292,7 @@ export default {
           this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
           this.temp.author = 'test'
           createArticle(this.temp).then(() => {
-            this.list.unshift(this.temp)
+            this.list.unshift(this.temp) // unshift添加数据
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -306,7 +306,7 @@ export default {
     },
     // 点击编辑
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
+      this.temp = Object.assign({}, row) // copy obj //这样就不会共用同一个对象
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
@@ -323,8 +323,8 @@ export default {
           updateArticle(tempData).then(() => {
             for (const v of this.list) {
               if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
+                const index = this.list.indexOf(v) // 找到要删除数据在list中的位置
+                this.list.splice(index, 1, this.temp) // //通过splice 替换数据 触发视图更新
                 break
               }
             }
@@ -347,8 +347,8 @@ export default {
         type: 'success',
         duration: 2000
       })
-      const index = this.list.indexOf(row) // 找到数据的位置
-      this.list.splice(index, 1) // splice删除
+      const index = this.list.indexOf(row) // 找到要删除数据在list中的位置
+      this.list.splice(index, 1) // 通过splice 删除数据
     },
     // 阅读数据类型数据
     handleFetchPv(pv) {

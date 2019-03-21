@@ -6,7 +6,7 @@
       <el-table-column align="center" label="角色标识" width="220">
         <template slot-scope="scope">{{ scope.row.key }}</template>
       </el-table-column>
-      <el-table-column align="center" label="角色账号" width="220">
+      <el-table-column align="center" label="角色名称" width="220">
         <template slot-scope="scope">{{ scope.row.name }}</template>
       </el-table-column>
       <el-table-column align="header-center" label="描述">
@@ -23,11 +23,8 @@
     <!-- 编辑界面 -->
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="role" label-width="80px" label-position="left"	>
-        <el-form-item label="角色账号">
+        <el-form-item label="角色名称">
           <el-input v-model="role.name" placeholder="Role Name"/>
-        </el-form-item>
-        <el-form-item label="角色密码">
-          <el-input v-model="role.password" placeholder="Role password"/>
         </el-form-item>
         <el-form-item label="角色描述">
           <el-input
@@ -36,7 +33,7 @@
             type="textarea"
             placeholder="Role Description"/>
         </el-form-item>
-        <el-form-item label="权限菜单">
+        <el-form-item label="菜单权限">
           <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps" show-checkbox node-key="path" class="permission-tree"/>
         </el-form-item>
       </el-form>
@@ -53,11 +50,10 @@
 import path from 'path'
 import { deepClone } from '@/utils'
 import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
-// import i18n from '@/lang'
+
 const defaultRole = {
   key: '',
   name: '',
-  password: '',
   description: '',
   routes: []
 }
@@ -91,23 +87,12 @@ export default {
       const res = await getRoutes()
       this.serviceRoutes = res.data
       this.routes = this.generateRoutes(res.data)
-      // this.routes = this.i18n(routes)
     },
     async getRoles() {
       const res = await getRoles()
       this.rolesList = res.data
+      // console.log(this.rolesList)
     },
-    // i18n(routes) {
-    //   const app = routes.map(route => {
-    //     route.title = i18n.t(`route.${route.title}`)
-    //     if (route.children) {
-    //       route.children = this.i18n(route.children)
-    //     }
-    //     return route
-    //   })
-    //   return app
-    // },
-    // Reshape the routes structure so that it looks the same as the sidebar
     generateRoutes(routes, basePath = '/') {
       const res = []
       for (let route of routes) {
@@ -158,6 +143,7 @@ export default {
       this.$nextTick(() => {
         const routes = this.generateRoutes(this.role.routes)
         this.$refs.tree.setCheckedNodes(this.generateArr(routes))
+        // console.log(this.generateArr(routes))
         // set checked state of a node not affects its father and child nodes
         this.checkStrictly = false
       })
@@ -210,14 +196,15 @@ export default {
         this.rolesList.push(this.role)
       }
       const { description, key, name } = this.role
+      // console.log(this.role)  // this.role 提交的角色权限数据
       this.dialogVisible = false
       this.$notify({
-        title: 'Success',
+        title: '成功',
         dangerouslyUseHTMLString: true,
         message: `
-            <div>Role Key: ${key}</div>
-            <div>Role Nmae: ${name}</div>
-            <div>Description: ${description}</div>
+            <div>角色标识: ${key}</div>
+            <div>角色名称: ${name}</div>
+            <div>描述: ${description}</div>
           `,
         type: 'success'
       })

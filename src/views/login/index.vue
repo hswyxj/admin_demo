@@ -45,13 +45,13 @@
       <div style="position:relative">
         <div class="tips">
           <span>试用管理账号 : admin</span>
-          <span>试用密码: 任意填</span>
+          <span>试用密码: adminpwd</span>
         </div>
         <div class="tips">
           <span style="margin-right:18px;">
             试用普通账号 : editor
           </span>
-          <span>试用密码: 任意填</span>
+          <span>试用密码: editorpwd</span>
         </div>
       </div>
     </el-form>
@@ -60,28 +60,28 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-// import LangSelect from '@/components/LangSelect'
+
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的用户名'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码不能少于6位'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '1111111'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -121,7 +121,7 @@ export default {
           this.loading = true
           this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
             this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path: this.redirect || '/' }) // 登录成功之后重定向到首页
           }).catch(() => {
             this.loading = false
           })

@@ -26,9 +26,6 @@ export default {
       'permission_routes',
       'sidebar'
     ]),
-    // permission_routes() {
-    //   return this.$router.options.permission_routes
-    // },
     variables() {
       return variables
     },

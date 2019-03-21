@@ -3,13 +3,10 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
   state: {
-    // token: getToken(),
-    // name: '',
-    // avatar: '',
-    // roles: []
     user: '',
     status: '',
     code: '',
+    // key: '',
     token: getToken(),
     name: '',
     avatar: '',
@@ -21,6 +18,9 @@ const user = {
   },
 
   mutations: {
+    // SET_KEY: (state, key) => {
+    //   state.key = key
+    // },
     SET_CODE: (state, code) => {
       state.code = code
     },
@@ -48,15 +48,16 @@ const user = {
   },
 
   actions: {
-    // 登录
+    // 用户名登录
     LoginByUsername({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
           const data = response.data
-          setToken(data.token)
           commit('SET_TOKEN', data.token)
-          resolve()
+          setToken(response.data.token)// 登录成功后将token存储在cookie之中
+          // console.log(response.data.token)
+          resolve(username)
         }).catch(error => {
           reject(error)
         })
@@ -68,18 +69,18 @@ const user = {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(response => {
           // 由于mockjs 不支持自定义状态码只能这样hack
+          // console.log(state)
           if (!response.data) {
-            reject('Verification failed, please login again.')
+            reject('验证失败，请重新登录')
           }
           const data = response.data
 
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', data.roles)
           } else {
-            reject('getInfo: roles must be a non-null array!')
+            reject('getInfo: 角色必须是非零的数组')
           }
 
-          commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
           commit('SET_INTRODUCTION', data.introduction)
           resolve(response)

@@ -34,7 +34,8 @@ import Layout from '../views/layout/Layout'
 
 **/
 
-// 代表那些不需要动态判断权限的路由，如登录页、404、等通用页面。
+// 所有权限通用路由表
+// 如首页和登录页和一些不用权限的公用页面
 export const constantRoutes = [
   {
     path: '/redirect',
@@ -81,14 +82,15 @@ export const constantRoutes = [
     ]
   }
 ]
-
+// 实例化vue的时候只挂载constantRoutes
 export default new Router({
   // mode: 'history', //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 
-// 侧边栏
+// 异步挂载的路由
+// 动态需要根据权限加载的路由表
 export const asyncRoutes = [
 
   {
@@ -204,7 +206,7 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/role'),
         name: 'RolePermission',
         meta: {
-          title: '用户管理',
+          title: '菜单权限',
           roles: ['admin']
         }
       }
