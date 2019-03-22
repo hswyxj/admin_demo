@@ -6,7 +6,7 @@
       <el-table-column align="center" label="角色归属" width="220">
         <template slot-scope="scope">{{ scope.row.name }}</template>
       </el-table-column>
-      <el-table-column align="center" label="用户名称" width="220">
+      <el-table-column align="center" label="用户账号" width="220">
         <template slot-scope="scope">{{ scope.row.username }}</template>
       </el-table-column>
       <el-table-column align="center" label="用户邮箱" width="220">
@@ -32,20 +32,20 @@
           </el-select>
         </el-form-item>
         <el-form-item label="用户账号" prop="username">
-          <el-input v-model="role.username" placeholder="UserRole Name"/>
+          <el-input v-model="role.username" placeholder="请输入用户账号" clearable/>
         </el-form-item>
-        <!-- <el-form-item label="账号密码">
-          <el-input v-model="role.password" placeholder="UserRole Password"/>
-        </el-form-item> -->
+        <el-form-item label="用户密码" prop="password">
+          <el-input v-model="role.password" placeholder="请输入用户密码" show-password clearable/>
+        </el-form-item>
         <el-form-item label="用户邮箱">
-          <el-input v-model="role.email" placeholder="UserRole Email"/>
+          <el-input v-model="role.email" placeholder="请输入用户邮箱" clearable/>
         </el-form-item>
         <el-form-item label="用户描述">
           <el-input
             v-model="role.description"
             :autosize="{ minRows: 2, maxRows: 4}"
             type="textarea"
-            placeholder="UserRole Description"/>
+            placeholder="请输入用户描述"/>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -66,6 +66,7 @@ const defaultRole = {
   key: '',
   name: '',
   username: '',
+  password: '',
   email: '',
   description: ''
   // routes: []
@@ -80,7 +81,8 @@ export default {
       checkStrictly: false,
       rules: {
         name: [{ required: true, message: '请选择角色组', trigger: 'change' }],
-        username: [{ required: true, message: '请输入用户名称', trigger: 'blur' }]
+        username: [{ required: true, message: '请输入用户名称', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入用户密码', trigger: 'blur' }]
       }
     }
   },

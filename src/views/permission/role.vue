@@ -24,14 +24,14 @@
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="role" label-width="80px" label-position="left"	>
         <el-form-item label="角色名称">
-          <el-input v-model="role.name" placeholder="Role Name"/>
+          <el-input v-model="role.name" placeholder="请输入角色名称"/>
         </el-form-item>
         <el-form-item label="角色描述">
           <el-input
             v-model="role.description"
             :autosize="{ minRows: 2, maxRows: 4}"
             type="textarea"
-            placeholder="Role Description"/>
+            placeholder="请输入角色描述"/>
         </el-form-item>
         <el-form-item label="菜单权限">
           <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps" show-checkbox node-key="path" class="permission-tree"/>

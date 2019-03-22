@@ -28,12 +28,13 @@
 <script>
 import path from 'path'
 import { isExternal } from '@/utils/validate'
+import logo from './logo'
 import Item from './Item'
 import AppLink from './Link'
 
 export default {
   name: 'SidebarItem',
-  components: { Item, AppLink },
+  components: { Item, AppLink, logo },
   props: {
     // route object
     item: {

@@ -1,5 +1,6 @@
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
+    <logo :is-collapse="isCollapse"/>
     <el-menu
       :default-active="$route.path"
       :collapse="isCollapse"
@@ -18,9 +19,10 @@
 import { mapGetters } from 'vuex'
 import variables from '@/styles/variables.scss'
 import SidebarItem from './SidebarItem'
+import logo from './logo'
 
 export default {
-  components: { SidebarItem },
+  components: { SidebarItem, logo },
   computed: {
     ...mapGetters([
       'permission_routes',

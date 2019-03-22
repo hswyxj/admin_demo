@@ -14,10 +14,11 @@
         </span>
         <el-input
           v-model="loginForm.username"
-          placeholder="账号"
+          placeholder="用户账号"
           name="username"
           type="text"
           auto-complete="on"
+          clearable
         />
       </el-form-item>
 
@@ -28,9 +29,10 @@
         <el-input
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="密码"
+          placeholder="用户密码"
           name="password"
           auto-complete="on"
+          clearable
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
@@ -45,13 +47,13 @@
       <div style="position:relative">
         <div class="tips">
           <span>试用管理账号 : admin</span>
-          <span>试用密码 : adminpwd</span>
+          <span>试用密码 : admin_password</span>
         </div>
         <div class="tips">
           <span style="margin-right:18px;">
             试用普通账号 : editor
           </span>
-          <span>试用密码 : editorpwd</span>
+          <span>试用密码 : editor_password</span>
         </div>
       </div>
     </el-form>
@@ -72,8 +74,8 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('密码不能少于6位'))
+      if (value.length < 8) {
+        callback(new Error('密码不能少于8位'))
       } else {
         callback()
       }
@@ -119,7 +121,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          this.$store.dispatch('LoginByUsernamePwd', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' }) // 登录成功之后重定向到首页
           }).catch(() => {
