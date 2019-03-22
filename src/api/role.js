@@ -7,6 +7,14 @@ export function getRoutes() {
   })
 }
 
+export function getRoleslist(query) {
+  return request({
+    url: '/roles/list',
+    method: 'get',
+    params: query
+  })
+}
+
 export function getRoles() {
   return request({
     url: '/roles',

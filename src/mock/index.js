@@ -31,6 +31,8 @@ Mock.mock(/\/roles$/, 'post', roleAPI.addRole)
 Mock.mock(/\/roles\/[A-Za-z0-9]+/, 'put', roleAPI.updateRole)
 Mock.mock(/\/roles\/[A-Za-z0-9]+/, 'delete', roleAPI.deleteRole)
 
+// 角色账号
+
 // 文章相关
 Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
 Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)

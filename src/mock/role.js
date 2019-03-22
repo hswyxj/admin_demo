@@ -9,6 +9,8 @@ const roles = [
   {
     key: 'admin',
     name: '超级管理员',
+    username: 'admin_user',
+    email: 'admin_user@test.com',
     description: '超级管理员，有权查看所有页面。',
     // routes: routes
     routes: routes
@@ -16,12 +18,16 @@ const roles = [
   {
     key: 'editor',
     name: '普通员工',
+    username: 'editor_user',
+    email: 'editor_user@test.com',
     description: '普通员工，可以查看除权限页之外的所有页',
     routes: filterAsyncRoutes(routes, ['editor'])
   },
   {
     key: 'visitor',
     name: '访客',
+    username: 'visitor_user',
+    email: 'visitor@test.com',
     description: '只是个访客，只能查看主页和文档页',
     routes: [{
       path: '',

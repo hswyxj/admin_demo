@@ -45,13 +45,13 @@
       <div style="position:relative">
         <div class="tips">
           <span>试用管理账号 : admin</span>
-          <span>试用密码: adminpwd</span>
+          <span>试用密码 : adminpwd</span>
         </div>
         <div class="tips">
           <span style="margin-right:18px;">
             试用普通账号 : editor
           </span>
-          <span>试用密码: editorpwd</span>
+          <span>试用密码 : editorpwd</span>
         </div>
       </div>
     </el-form>
@@ -208,9 +208,9 @@ $light_gray:#eee;
   overflow: hidden;
   .login-form {
     position: relative;
-    width: 520px;
+    width: 450px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 210px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
