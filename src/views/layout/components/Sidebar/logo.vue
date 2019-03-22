@@ -1,15 +1,5 @@
 <template>
   <div class="logo">
-    <transition name="fade">
-      <span v-if="isCollapse" key="0" :class="{'is-text':!type,'is-img':type}" class="logo_title is-bold ">
-        <template v-if="type">
-          <img :src="P" width="40" height="40" >
-        </template>
-        <template v-else>
-          P
-        </template>
-      </span>
-    </transition>
     <transition-group name="fade">
       <template v-if="!isCollapse">
         <span key="1" class="logo_title is-bold">管理后台</span>
@@ -20,31 +10,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 export default {
   name: 'Logo',
-  props: {
-    isCollapse: {
-      required: true,
-      validator: function(value) {
-        return (
-          value === null ||
-        Array.isArray(value) && value.length > 0
-        )
-      }
-    }
-  },
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['isCollapse'],
   data() {
     return {}
   },
-  computed: {
-    ...mapGetters(['website']),
-    type: function(val) {
-      return this.website.logo.indexOf('static') !== -1
-    }
-  },
+  computed: {},
   created() {},
-
   methods: {}
 }
 </script>
