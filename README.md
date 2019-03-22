@@ -29,7 +29,7 @@ npm run build --report
 ```
 - ├── build                      // 构建相关
 - ├── config                     // 配置相关
-- ├── docs                       // 项目build打包的最终产物（不用管）
+- ├── docs                       // 项目build打包的最终产物（ 忽略- 打包目录可以在config/index.js设置）
 - ├── src                        // 源代码
 - │   ├── api                    // 所有api请求
 - │   ├── assets                 // 主题 字体等静态资源

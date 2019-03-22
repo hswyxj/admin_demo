@@ -9,6 +9,9 @@
       <el-table-column align="center" label="用户账号" width="220">
         <template slot-scope="scope">{{ scope.row.username }}</template>
       </el-table-column>
+      <el-table-column align="center" label="手机号码" width="220">
+        <template slot-scope="scope">{{ scope.row.iphonenum }}</template>
+      </el-table-column>
       <el-table-column align="center" label="用户邮箱" width="220">
         <template slot-scope="scope">{{ scope.row.email }}</template>
       </el-table-column>
@@ -27,23 +30,26 @@
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit UserRole':'New UserRole'" >
       <el-form ref="role" :model="role" :rules="rules" label-width="80px" label-position="left"	>
         <el-form-item label="角色选择" prop="name">
-          <el-select v-model="role.name" placeholder="角色选择" clearable style="width: 150px">
+          <el-select v-model="role.name" placeholder="角色选择" clearable>
             <el-option v-for="item in rolesList" :key="item.key" :label="item.name" :value="item.name"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="用户账号" prop="username">
+        <el-form-item label="用户账号" prop="username" >
           <el-input v-model="role.username" placeholder="请输入用户账号" clearable/>
         </el-form-item>
         <el-form-item label="用户密码" prop="password">
           <el-input v-model="role.password" placeholder="请输入用户密码" show-password clearable/>
         </el-form-item>
-        <el-form-item label="用户邮箱">
+        <el-form-item label="手机号码" prop="iphonenum">
+          <el-input v-model="role.iphonenum" placeholder="请输入用户邮箱" clearable/>
+        </el-form-item>
+        <el-form-item label="用户邮箱" prop="email">
           <el-input v-model="role.email" placeholder="请输入用户邮箱" clearable/>
         </el-form-item>
         <el-form-item label="用户描述">
           <el-input
             v-model="role.description"
-            :autosize="{ minRows: 2, maxRows: 4}"
+            :autosize="{ minRows: 3, maxRows: 4}"
             type="textarea"
             placeholder="请输入用户描述"/>
         </el-form-item>
@@ -67,6 +73,7 @@ const defaultRole = {
   name: '',
   username: '',
   password: '',
+  iphonenum: '',
   email: '',
   description: ''
   // routes: []
@@ -82,7 +89,9 @@ export default {
       rules: {
         name: [{ required: true, message: '请选择角色组', trigger: 'change' }],
         username: [{ required: true, message: '请输入用户名称', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入用户密码', trigger: 'blur' }]
+        password: [{ required: true, message: '请输入用户密码', trigger: 'blur' }],
+        iphonenum: [{ required: true, message: '请输入用户手机号码', trigger: 'blur' }],
+        email: [{ required: true, message: '请输入用户邮箱', trigger: 'blur' }]
       }
     }
   },

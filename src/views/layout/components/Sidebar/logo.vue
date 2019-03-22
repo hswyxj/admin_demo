@@ -40,9 +40,9 @@ export default {
   justify-content: center;
   align-items: center;
   // width: 230px;
-  height: 110px;
+  height: 100px;
   line-height: 1210px;
-  background: #263548;
+  background: #1f2d3d;
   color: #fdfdfd;
   text-align: center;
   font-size: 20px;

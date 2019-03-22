@@ -92,7 +92,18 @@ export default new Router({
 // 异步挂载的路由
 // 动态需要根据权限加载的路由表
 export const asyncRoutes = [
-
+  {
+    path: '/datecard',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'datecard',
+        component: () => import('@/views/datecard/datecard'),
+        meta: { title: '卡片展示', icon: 'list' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,

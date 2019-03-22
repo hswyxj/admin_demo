@@ -35,7 +35,7 @@
       @sort-change="sortChange"
       @selection-change="selsChange" >
 
-      <el-table-column type="selection" width="55"/>
+      <el-table-column type="selection" width="65" align="center"/>
 
       <el-table-column label="序号" prop="id" sortable="custom" align="center" width="65">
         <template slot-scope="scope">
