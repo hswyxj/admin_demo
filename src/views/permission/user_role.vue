@@ -41,7 +41,7 @@
           <el-input v-model="role.password" placeholder="请输入用户密码" show-password clearable/>
         </el-form-item>
         <el-form-item label="手机号码" prop="iphonenum">
-          <el-input v-model="role.iphonenum" placeholder="请输入用户邮箱" clearable/>
+          <el-input v-model="role.iphonenum" placeholder="请输入用户手机号码" clearable/>
         </el-form-item>
         <el-form-item label="用户邮箱" prop="email">
           <el-input v-model="role.email" placeholder="请输入用户邮箱" clearable/>

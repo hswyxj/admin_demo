@@ -20,7 +20,7 @@ const userMap = {
 }
 
 export default {
-  loginByUsername: config => {
+  loginByUsernamePwd: config => {
     const { username } = JSON.parse(config.body)
     const { password } = JSON.parse(config.body)
     // console.log(password)
