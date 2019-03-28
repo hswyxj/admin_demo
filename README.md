@@ -187,6 +187,9 @@ setting.json：
 ```
 
 这样侧边栏就会出现如图所示的 menu-item 了
+<p>
+  <img src="https://wpimg.wallstcn.com/2ab6921d-f9bb-4fbb-a151-0e6027e23a6e.png">
+</p>
 
 
 ### TIP children 2
@@ -210,22 +213,33 @@ setting.json：
 ```
 
 侧边栏就会出现如图所示的 submenu 了
+<p>
+  <img src="https://wpimg.wallstcn.com/89d6a0b8-5cf7-4a19-9afd-7267ec454066.png">
+</p>
+
 
 
 ### 多级目录(嵌套路由)
 如果你的路由是多级目录，如本项目 @/views/nested 那样， 有三级路由嵌套的情况下，不要忘记还要手动在二级目录的根文件下添加一个 <router-view>。
 如：@/views/nested/menu1/index.vue，原则上有多少级路由嵌套就需要多少个<router-view>。
+<p>
+  <img src="https://wpimg.wallstcn.com/9459de62-64d0-4819-9730-daf3f9889018.png">
+</p>
 
 
 ### 新增 view
 新增完路由之后不要忘记在 @/views 文件下 创建对应的文件夹，一般性一个路由对应一个文件，该模块下的功能组件或者方法就建议在本文件夹下创建一个utils或components文件夹，各个功能模块维护自己的utils或components组件。如：
+<p>
+  <img src="https://wpimg.wallstcn.com/8ca55a30-c22c-4143-aa8d-2a0d3e04fc33.png">
+</p>
+
 
 ### 新增 api
 最后在 @/api 文件夹下创建本模块对应的 api 服务。
 
 ### 新增组件
 在全局的 @/components 只会写一些全局的组件，如富文本，各种搜索组件，封装的日期组件等等，能被公用的组件。每个页面或者模块特定的业务组件则会写在当前 views 下面。如：@/views/article/components/xxx.vue。这样拆分大大减轻了维护成本。
-拆分组件最大的好处不是公用而是可维护性！
+ - 拆分组件最大的好处不是公用而是可维护性！
 
 ### 新增样式
 页面的样式和组件是一个道理，全局的 @/style 放置一下全局公用的样式，每一个页面的样式就写在当前 views下面，请记住加上scoped 或者命名空间，避免造成全局的样式污染。
