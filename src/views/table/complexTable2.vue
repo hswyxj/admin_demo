@@ -150,7 +150,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle, batchremoveArticle } from '@/api/article'
+import { fetchList, fetchPv, createArticle, updateArticle, batchremoveArticle } from '@/api/article' // @ 等价于 /src 这个目录，避免写麻烦又易错的相对路径
 import waves from '@/directive/waves' // Waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -191,7 +191,6 @@ export default {
         limit: 20,
         importance: undefined,
         title: undefined,
-        // type: undefined,
         status: undefined,
         sort: '+id'
       },

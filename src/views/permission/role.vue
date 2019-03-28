@@ -139,7 +139,7 @@ export default {
       this.dialogType = 'edit'
       this.dialogVisible = true
       this.checkStrictly = true
-      this.role = deepClone(scope.row)
+      this.role = deepClone(scope.row) // deepClone深克隆
       this.$nextTick(() => {
         const routes = this.generateRoutes(this.role.routes)
         this.$refs.tree.setCheckedNodes(this.generateArr(routes))

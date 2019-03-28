@@ -100,11 +100,13 @@ export default {
     this.getRoles()
   },
   methods: {
+    // async 异步函数也就意味着该函数的执行不会阻塞后面代码的执行
+    // 需要注意：await必须放在async中
     async getRoles() {
+      // await 需要等待await后面的函数运行完并且有了返回结果之后，才继续执行下面的代码。这正是同步的效果
       const res = await getRoles()
       this.rolesList = res.data
       // console.log(this.role)
-      // console.log(this.rolesList[0].name)
     },
     handleAddRole() {
       this.role = Object.assign({}, defaultRole)
@@ -113,8 +115,9 @@ export default {
       // }
       this.dialogType = 'new'
       this.dialogVisible = true
-      this.$nextTick(() => {
+      this.$nextTick(() => { // 等整个视图都渲染完毕后
         this.$refs['role'].clearValidate()
+        // console.log(this.$refs) //ref属性的所有元素的引用
       })
     },
     handleEdit(scope) {
