@@ -26,9 +26,9 @@ npm run build --report
 ```
 
 
-# TIP
- - 强烈建议不要用直接使用 cnpm 安装，会有各种诡异的 bug，可以通过重新指定 registry 来解决 npm 安装速度慢的问题。若还是不行，可使用 yarn 替代 npm。
- - Windows 用户若安装不成功，很大概率是node-sass安装失败，[解决方案](https://github.com/PanJiaChen/vue-element-admin/issues/24)
+> TIP
+ 强烈建议不要用直接使用 cnpm 安装，会有各种诡异的 bug，可以通过重新指定 registry 来解决 npm 安装速度慢的问题。若还是不行，可使用 yarn 替代 npm。
+ Windows 用户若安装不成功，很大概率是node-sass安装失败，[解决方案](https://github.com/PanJiaChen/vue-element-admin/issues/24)
 另外因为 node-sass 是依赖 python环境的，如果你之前没有安装和配置过的话，需要自行查看一下相关安装教程。
 ```
 npm install --registry=https://registry.npm.taobao.org
@@ -163,7 +163,7 @@ setting.json：
 }
 ```
 
-### TIP children
+> TIP 
 仅仅这样不会有任何效果的，它只是创建了一个基于layout的一级路由，你还需要在它下面的 children 中添加子路由。
 ```
 {
@@ -192,8 +192,8 @@ setting.json：
 </p>
 
 
-### TIP children 2
- - 由于 children 下面只声明了一个路由所以不会有展开箭头，如果children下面的路由个数大于 1 就会有展开箭头，如下面所示。 如果你想忽视这个自动判断可以使用 alwaysShow: true，这样它就会忽略之前定义的规则，一直显示根路由。详情见路由和侧边栏
+> TIP children 2
+ 由于 children 下面只声明了一个路由所以不会有展开箭头，如果children下面的路由个数大于 1 就会有展开箭头，如下面所示。 如果你想忽视这个自动判断可以使用 alwaysShow: true，这样它就会忽略之前定义的规则，一直显示根路由。详情见路由和侧边栏
  ```
 {
   path: '/excel',
