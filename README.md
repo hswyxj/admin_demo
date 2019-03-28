@@ -28,7 +28,7 @@ npm run build --report
 
 # TIP
  - 强烈建议不要用直接使用 cnpm 安装，会有各种诡异的 bug，可以通过重新指定 registry 来解决 npm 安装速度慢的问题。若还是不行，可使用 yarn 替代 npm。
- - Windows 用户若安装不成功，很大概率是node-sass安装失败，解决方案:https://github.com/PanJiaChen/vue-element-admin/issues/24。
+ - Windows 用户若安装不成功，很大概率是node-sass安装失败，[解决方案](https://github.com/PanJiaChen/vue-element-admin/issues/24)
 另外因为 node-sass 是依赖 python环境的，如果你之前没有安装和配置过的话，需要自行查看一下相关安装教程。
 ```
 npm install --registry=https://registry.npm.taobao.org
@@ -43,13 +43,14 @@ npm install --registry=https://registry.npm.taobao.org
 
 # 代码规范 ESLint（最好使用eslint+vscode 来写vue）
 
- - 代码规范所有的配置文件都在 .eslintrc.js 中。 本项目基本规范是依托于 vue 官方的 eslint 规则 eslint-config-vue。
+ - 代码规范所有的配置文件都在 [.eslintrc.js](https://github.com/hswyxj/admin_demo/blob/master/.eslintrc.js) 中。 本项目基本规范是依托于 vue 官方的 eslint 规则 [eslint-config-vue](https://github.com/vuejs/eslint-config-vue))。
 
  - VSCode 推荐安装插件：eslint 、vetur、HTML CSS Support、Prettier - Code formatter、Manta's Stylus Supremacy
 
  - 设置，依次点击 文件 > 首选项 > 设置 打开 VSCode 配置文件,添加如下配置
 ```
 setting.json：
+
 {
    // vscode默认启用了根据文件类型自动设置tabsize的选项
   "editor.detectIndentation": false,
