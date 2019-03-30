@@ -20,7 +20,7 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">修改</el-button>
+          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑修改</el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
         </template>
       </el-table-column>
@@ -29,7 +29,7 @@
     <!-- 编辑界面 -->
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit UserRole':'New UserRole'" >
       <el-form ref="role" :model="role" :rules="rules" label-width="80px" label-position="left"	>
-        <el-form-item label="角色选择" prop="name">
+        <el-form-item label="角色归属" prop="name">
           <el-select v-model="role.name" placeholder="角色选择" clearable>
             <el-option v-for="item in rolesList" :key="item.key" :label="item.name" :value="item.name"/>
           </el-select>

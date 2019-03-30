@@ -222,6 +222,15 @@ export const asyncRoutes = [
         }
       },
       {
+        path: 'role_channel',
+        component: () => import('@/views/permission/role_channel'),
+        name: 'UserchannelPermission',
+        meta: {
+          title: '渠道权限',
+          roles: ['admin']
+        }
+      },
+      {
         path: 'user_role',
         component: () => import('@/views/permission/user_role'),
         name: 'UserRolePermission',
