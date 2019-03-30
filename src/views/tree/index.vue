@@ -7,6 +7,7 @@
       :data="data2"
       :props="defaultProps"
       :filter-node-method="filterNode"
+      show-checkbox
       class="filter-tree"
       default-expand-all
     />

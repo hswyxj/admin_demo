@@ -13,6 +13,7 @@
           <svg-icon icon-class="user" />
         </span>
         <el-input
+          ref="username"
           v-model="loginForm.username"
           placeholder="用户账号"
           name="username"
@@ -27,6 +28,7 @@
           <svg-icon icon-class="password" />
         </span>
         <el-input
+          ref="password"
           v-model="loginForm.password"
           placeholder="用户密码"
           name="password"
@@ -43,14 +45,14 @@
 
       <div style="position:relative">
         <div class="tips">
-          <span>试用管理账号 : admin</span>
-          <span>试用密码 : admin_password</span>
+          <span>超级管理账号 : admin</span>
+          <span>密码 : admin_password</span>
         </div>
         <div class="tips">
           <span style="margin-right:18px;">
-            试用普通账号 : editor
+            普通员工账号 : editor
           </span>
-          <span>试用密码 : editor_password</span>
+          <span>密码 : editor_password</span>
         </div>
       </div>
     </el-form>
@@ -79,8 +81,8 @@ export default {
     }
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: 'admin_password'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -103,17 +105,27 @@ export default {
   created() {
     // window.addEventListener('hashchange', this.afterQRScan)
   },
+  mounted() {
+    if (this.loginForm.username === '') {
+      this.$refs.username.focus()
+    } else if (this.loginForm.password === '') {
+      this.$refs.password.focus()
+    }
+  },
   destroyed() {
     // window.removeEventListener('hashchange', this.afterQRScan)
   },
   methods: {
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
-    },
+    // showPwd() {
+    //   if (this.passwordType === 'password') {
+    //     this.passwordType = ''
+    //   } else {
+    //     this.passwordType = 'password'
+    //   }
+    //   this.$nextTick(() => {
+    //     this.$refs.password.focus()
+    //   })
+    // },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -129,24 +141,6 @@ export default {
           return false
         }
       })
-    },
-    afterQRScan() {
-      // const hash = window.location.hash.slice(1)
-      // const hashObj = getQueryObject(hash)
-      // const originUrl = window.location.origin
-      // history.replaceState({}, '', originUrl)
-      // const codeMap = {
-      //   wechat: 'code',
-      //   tencent: 'code'
-      // }
-      // const codeName = hashObj[codeMap[this.auth_type]]
-      // if (!codeName) {
-      //   alert('第三方登录失败')
-      // } else {
-      //   this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-      //     this.$router.push({ path: '/' })
-      //   })
-      // }
     }
   }
 }

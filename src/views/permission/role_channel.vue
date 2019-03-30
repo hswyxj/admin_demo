@@ -5,7 +5,7 @@
       <el-table-column align="center" label="角色归属" width="220">
         <template slot-scope="scope">{{ scope.row.role_name }}</template>
       </el-table-column>
-      <el-table-column align="center" label="渠道列表" max-width="520">
+      <el-table-column align="center" label="渠道列表">
         <template slot-scope="scope">
           <el-tag v-for="item in scope.row.channel_name" :key="item" :label="item" :value="item">{{ item }}</el-tag>
         </template>
@@ -13,7 +13,7 @@
       <el-table-column align="header-center" label="描述">
         <template slot-scope="scope">{{ scope.row.description }}</template>
       </el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" width="420">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">编辑修改</el-button>
           <!-- <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button> -->
