@@ -34,8 +34,9 @@
           </el-select>
         </el-form-item>
         <el-form-item label="渠道列表" prop="channel_name">
-          <el-checkbox-group v-model="channel.channel_name">
-            <el-checkbox v-for="item in channel.channel_namelist" :key="item.id" :label="item.name" :value="item.name" name="channel_name"/>
+          <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+          <el-checkbox-group v-model="channel.channel_name" @change="handleCheckedchannelnamesChange">
+            <el-checkbox v-for="item in channel.channel_namelist" :key="item" :label="item" :value="item" name="channel_name"/>
           </el-checkbox-group>
           <!-- <el-select
             v-model="channel.channel_name"
@@ -67,7 +68,7 @@
 <script>
 // import path from 'path'
 import { deepClone } from '@/utils'
-import { getRolechannels, deleteRolechannels, updateRolechannels, createRolechannel } from '@/api/channel'
+import { getRolechannels, updateRolechannels, createRolechannel } from '@/api/channel'
 
 const defaultchannel = {
   id: '',
@@ -81,8 +82,10 @@ const defaultchannel = {
 export default {
   data() {
     return {
+      checkAll: false,
       channel: Object.assign({}, defaultchannel),
       rolechannelList: [],
+      isIndeterminate: true,
       dialogVisible: false,
       dialogType: 'new',
       checkStrictly: false,
@@ -103,28 +106,22 @@ export default {
       // await 需要等待await后面的函数运行完并且有了返回结果之后，才继续执行下面的代码。这正是同步的效果
       const res = await getRolechannels()
       this.rolechannelList = res.data
-      // console.log(this.rolechannelList)
+      this.channel_namelists = this.rolechannelList[0].channel_namelist
+      // console.log(this.channel_namelists)
+    },
+    handleCheckAllChange(val) {
+      this.channel.channel_name = val ? this.channel.channel_namelist : []
+      this.isIndeterminate = false
+    },
+    handleCheckedchannelnamesChange(value) {
+      const checkedCount = value.length
+      this.checkAll = checkedCount === this.channel.channel_namelist.length
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.channel.channel_namelist.length
     },
     handleEdit(scope) {
       this.dialogType = 'edit'
       this.dialogVisible = true
       this.channel = deepClone(scope.row)
-    },
-    handleDelete({ $index, row }) {
-      this.$confirm('确定要删除该角色吗?', 'Warning', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(async() => {
-          await deleteRolechannels(row.id)
-          this.rolechannelList.splice($index, 1)
-          this.$message({
-            type: 'success',
-            message: '删除成功'
-          })
-        })
-        .catch(err => { console.error(err) })
     },
     async confirmRole(channel) {
       this.$refs[channel].validate((valid) => {
