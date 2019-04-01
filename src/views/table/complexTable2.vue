@@ -247,7 +247,6 @@ export default {
     },
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex % 2 !== 0) {
-        console.log(row)
         if (rowIndex) {
           return 'success-row'
         }
