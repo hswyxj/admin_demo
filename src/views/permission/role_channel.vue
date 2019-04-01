@@ -13,7 +13,7 @@
       <el-table-column align="header-center" label="描述">
         <template slot-scope="scope">{{ scope.row.description }}</template>
       </el-table-column>
-      <el-table-column label="更新时间" width="150px" align="center">
+      <el-table-column label="更新时间" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
