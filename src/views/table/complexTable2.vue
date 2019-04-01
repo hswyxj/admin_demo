@@ -28,6 +28,7 @@
       v-loading="listLoading"
       :key="tableKey"
       :data="list"
+      :row-class-name="tableRowClassName"
       border
       fit
       highlight-current-row
@@ -244,6 +245,17 @@ export default {
         }, 1.5 * 1000)
       })
     },
+    tableRowClassName({ row, rowIndex }) {
+      if (rowIndex % 2 !== 0) {
+        console.log(row)
+        if (rowIndex) {
+          return 'success-row'
+        }
+      } else if (rowIndex % 2 !== 1) {
+        return ''
+      }
+    },
+
     handleFilter() {
       // this.listQuery.page = 1
       this.getList()
@@ -415,3 +427,13 @@ export default {
   }
 }
 </script>
+
+<style>
+  .el-table .warning-row {
+    background: oldlace;
+  }
+
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
+</style>

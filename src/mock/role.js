@@ -11,9 +11,10 @@ const roles = [
     name: '超级管理员',
     username: 'admin_user',
     password: 'admin_password',
-    iphonenum: '13111111111',
+    iphonenum: 13111111111,
     email: 'admin_user@yyft.com',
     description: '超级管理员，有权查看所有页面。',
+    update_time: +Mock.Random.date('T'),
     // routes: routes
     routes: routes
   },
@@ -22,9 +23,10 @@ const roles = [
     name: '普通员工',
     username: 'editor_user',
     password: 'editor_password',
-    iphonenum: '13111111112',
+    iphonenum: 13111111112,
     email: 'editor_user@yyft.com',
     description: '普通员工，可以查看除权限页之外的所有页。',
+    update_time: +Mock.Random.date('T'),
     routes: filterAsyncRoutes(routes, ['editor'])
   },
   {
@@ -32,9 +34,10 @@ const roles = [
     name: '访客',
     username: 'visitor_user',
     password: 'visitor_password',
-    iphonenum: '13111111113',
+    iphonenum: 13111111113,
     email: 'visitor_user@yyft.com',
     description: '只是个访客，只能查看主页和文档页。',
+    update_time: +Mock.Random.date('T'),
     routes: [{
       path: '',
       redirect: 'dashboard',

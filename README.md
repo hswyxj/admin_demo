@@ -25,6 +25,7 @@ npm run build
 npm run build --report
 ```
 
+## 注意：该项目使用 element-ui@2.3.0+ 版本，所以最低兼容 vue@2.5.0+
 
 > TIP
  强烈建议不要用直接使用 cnpm 安装，会有各种诡异的 bug，可以通过重新指定 registry 来解决 npm 安装速度慢的问题。若还是不行，可使用 yarn 替代 npm。

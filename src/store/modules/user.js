@@ -56,7 +56,6 @@ const user = {
           const data = response.data
           commit('SET_TOKEN', data.token)
           setToken(response.data.token)// 登录成功后将token存储在cookie之中
-          // console.log(response.data.token)
           resolve(username)
         }).catch(error => {
           reject(error)

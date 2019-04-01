@@ -18,6 +18,11 @@
       <el-table-column align="header-center" label="描述">
         <template slot-scope="scope">{{ scope.row.description }}</template>
       </el-table-column>
+      <el-table-column label="更新时间" width="150px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">编辑修改</el-button>
@@ -27,7 +32,7 @@
     </el-table>
 
     <!-- 编辑界面 -->
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit UserRole':'New UserRole'" >
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑用户资料':'新增用户'" >
       <el-form ref="role" :model="role" :rules="rules" label-width="80px" label-position="left"	>
         <el-form-item label="角色归属" prop="name">
           <el-select v-model="role.name" placeholder="角色选择" clearable>
@@ -40,8 +45,8 @@
         <el-form-item label="用户密码" prop="password">
           <el-input v-model="role.password" placeholder="请输入用户密码" show-password clearable/>
         </el-form-item>
-        <el-form-item label="手机号码" prop="iphonenum">
-          <el-input v-model="role.iphonenum" placeholder="请输入用户手机号码" clearable/>
+        <el-form-item label="手机号码" prop="iphonenum" >
+          <el-input v-if="role.iphonenum" v-model.number="role.iphonenum" placeholder="请输入用户手机号码" oninput="if(value.length>11)value=value.slice(0,11)" clearable/>
         </el-form-item>
         <el-form-item label="用户邮箱" prop="email">
           <el-input v-model="role.email" placeholder="请输入用户邮箱" clearable/>
@@ -73,13 +78,34 @@ const defaultRole = {
   name: '',
   username: '',
   password: '',
-  iphonenum: '',
   email: '',
   description: ''
-  // routes: []
 }
 export default {
   data() {
+    // 自定义验证规则
+    var checkIphonenum = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('请输入用户手机号码'))
+      }
+      setTimeout(() => {
+        if (value.toString().length !== 11) {
+          callback(new Error('用户手机号码必须11位'))
+        } else {
+          callback()
+        }
+      }, 1000)
+    }
+    var validatePass = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入用户密码'))
+      } else {
+        if (value.toString().length < 8) {
+          callback(new Error('用户密码必须8位以上'))
+        }
+        callback()
+      }
+    }
     return {
       role: Object.assign({}, defaultRole),
       rolesList: [],
@@ -89,8 +115,11 @@ export default {
       rules: {
         name: [{ required: true, message: '请选择角色组', trigger: 'change' }],
         username: [{ required: true, message: '请输入用户名称', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入用户密码', trigger: 'blur' }],
-        iphonenum: [{ required: true, message: '请输入用户手机号码', trigger: 'blur' }],
+        password: [{ validator: validatePass, required: true, trigger: 'blur' }],
+        // iphonenum: [{ type: 'number', required: true, message: '请输入用户手机号码', trigger: 'blur' }],
+        iphonenum: [{ validator: checkIphonenum, required: true, trigger: 'blur' },
+          { type: 'number', message: '手机号码必须为数字值' }],
+
         email: [{ required: true, message: '请输入用户邮箱', trigger: 'blur' }]
       }
     }
@@ -142,10 +171,11 @@ export default {
         .catch(err => { console.error(err) })
     },
     async confirmRole(role) {
-      this.$refs['role'].validate((valid) => {
+      this.$refs[role].validate((valid) => {
         const isEdit = this.dialogType === 'edit'
         if (valid) {
           if (isEdit) {
+            this.role.update_time = new Date().getTime()
             updateRole(this.role.key, this.role)
             for (let index = 0; index < this.rolesList.length; index++) {
               if (this.rolesList[index].key === this.role.key) {

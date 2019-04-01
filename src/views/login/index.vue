@@ -133,6 +133,7 @@ export default {
           this.$store.dispatch('LoginByUsernamePwd', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' }) // 登录成功之后重定向到首页
+            console.log(this.redirect)
           }).catch(() => {
             this.loading = false
           })

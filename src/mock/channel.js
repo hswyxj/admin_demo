@@ -7,9 +7,9 @@ const role_channels = [
     channel_name: ['朋友玩', '泛娱', '测试'],
     channel_namelist: ['朋友玩', '泛娱', '测试', 'test1', 'test2', 'test3', 'test4', 'test5'],
     game_package_name: 'package1',
-    update_user: '@cname',
+    update_user: 'update_user1',
     timestamp: +Mock.Random.date('T'),
-    display_time: '@datetime',
+    update_time: +Mock.Random.date('T'),
     description: '朋友玩渠道'
   },
   {
@@ -18,9 +18,9 @@ const role_channels = [
     channel_name: ['泛娱'],
     channel_namelist: ['朋友玩', '泛娱', '测试', 'test1', 'test2', 'test3', 'test4', 'test5'],
     game_package_name: 'package2',
-    update_user: '@cname',
+    update_user: 'update_user2',
     timestamp: +Mock.Random.date('T'),
-    display_time: '@datetime',
+    update_time: +Mock.Random.date('T'),
     description: '泛娱渠道'
   },
   {
@@ -29,9 +29,9 @@ const role_channels = [
     channel_name: ['测试'],
     channel_namelist: ['朋友玩', '泛娱', '测试', 'test1', 'test2', 'test3', 'test4', 'test5'],
     game_package_name: 'package3',
-    update_user: '@cname',
+    update_user: 'update_user3',
     timestamp: +Mock.Random.date('T'),
-    display_time: '@datetime',
+    update_time: +Mock.Random.date('T'),
     description: '测试渠道'
   }
 ]

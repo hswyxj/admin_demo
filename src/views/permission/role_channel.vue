@@ -13,7 +13,12 @@
       <el-table-column align="header-center" label="描述">
         <template slot-scope="scope">{{ scope.row.description }}</template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="420">
+      <el-table-column label="更新时间" width="150px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">编辑修改</el-button>
           <!-- <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button> -->
@@ -22,7 +27,7 @@
     </el-table>
 
     <!-- 编辑界面 -->
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Rolechannel':'New Rolechannel'">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑渠道权限':''">
       <el-form ref="channel" :model="channel" :rules="rules" label-width="80px" label-position="left"	>
         <el-form-item label="角色归属" prop="role_name" >
           <el-select
@@ -106,8 +111,7 @@ export default {
       // await 需要等待await后面的函数运行完并且有了返回结果之后，才继续执行下面的代码。这正是同步的效果
       const res = await getRolechannels()
       this.rolechannelList = res.data
-      this.channel_namelists = this.rolechannelList[0].channel_namelist
-      // console.log(this.channel_namelists)
+      // console.log(this.rolechannelList)
     },
     handleCheckAllChange(val) {
       this.channel.channel_name = val ? this.channel.channel_namelist : []
@@ -128,6 +132,7 @@ export default {
         const isEdit = this.dialogType === 'edit'
         if (valid) {
           if (isEdit) {
+            this.channel.update_time = new Date().getTime()
             updateRolechannels(this.channel.id, this.channel)
             for (let index = 0; index < this.rolechannelList.length; index++) {
               if (this.rolechannelList[index].id === this.channel.id) {
