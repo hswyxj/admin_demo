@@ -24,6 +24,7 @@
     <!--列表-->
     <!-- @sort-change="sortChange 事件会在页面加载时自动触发一次-->
     <!--列表 @selection-change="selsChange" 多选 便于获取选中的值-->
+    <!--  row-class-name 属性来为 Table 中的某一行添加 class，表明该行处于某种状态。 -->
     <el-table
       v-loading="listLoading"
       :key="tableKey"
@@ -83,7 +84,7 @@
           <!-- <el-tag>{{ scope.row.status | statusFilter }}</el-tag> -->
           <el-tag v-if="scope.row.status==='published'" type="success" >{{ scope.row.status | statusFilter }}</el-tag>
           <el-tag v-if="scope.row.status==='draft'" type="info" >{{ scope.row.status | statusFilter }}</el-tag>
-          <el-tag v-if="scope.row.status==='deleted'" type="danger" >{{ scope.row.status | statusFilter }}</el-tag>
+          <!-- <el-tag v-if="scope.row.status==='deleted'" type="danger" >{{ scope.row.status | statusFilter }}</el-tag> -->
         </template>
       </el-table-column>
 
@@ -157,8 +158,8 @@ import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 const calendarStatusOptions = [
   { key: 'published', display_name: '已发布' },
-  { key: 'draft', display_name: '草稿' },
-  { key: 'deleted', display_name: '已删除' }
+  { key: 'draft', display_name: '草稿' }
+  // { key: 'deleted', display_name: '已删除' }
 ]
 // arr to obj ,such as { CN : "China", US : "USA" }
 const calendarStatusKeyValue = calendarStatusOptions.reduce((acc, cur) => {
@@ -231,6 +232,8 @@ export default {
   created() {
     this.getList()
   },
+
+  // 在这发起后端请求，拿回数据，配合路由钩子做一些事情 （dom渲染完成 组件挂载完成 ）
   methods: {
     getList() {
       this.listLoading = true
@@ -245,14 +248,22 @@ export default {
         }, 1.5 * 1000)
       })
     },
+    // row-class-name 属性来为 Table 中的某一行添加 class，表明该行处于某种状态。
     tableRowClassName({ row, rowIndex }) {
-      if (rowIndex % 2 !== 0) {
-        if (rowIndex) {
-          return 'success-row'
-        }
-      } else if (rowIndex % 2 !== 1) {
-        return ''
+      if (row.status === 'published') {
+        return 'success-row'
+      } else if (row.status === 'draft') {
+        return 'info-row'
+      } else if (row.status === 'deleted') {
+        return 'danger-row'
       }
+      // if (rowIndex % 2 !== 0) {
+      //   if (rowIndex) {
+      //     return 'success-row'
+      //   }
+      // } else if (rowIndex % 2 !== 1) {
+      //   return ''
+      // }
     },
 
     handleFilter() {
@@ -260,11 +271,16 @@ export default {
       this.getList()
     },
     handleModifyStatus(row, status) {
-      this.$message({
-        message: '操作成功',
-        type: 'success'
-      })
-      row.status = status
+      console.log(status)
+      if (status === 'deleted') {
+        this.handleDelete()
+      } else {
+        this.$message({
+          message: '操作成功',
+          type: 'success'
+        })
+        row.status = status
+      }
     },
     sortChange(data) {
       const { prop, order } = data
@@ -434,5 +450,13 @@ export default {
 
   .el-table .success-row {
     background: #f0f9eb;
+  }
+
+  /* .el-table .info-row {
+    background: #f4f4f5;
+  } */
+
+  .el-table .danger-row {
+    background: #fef0f0;
   }
 </style>

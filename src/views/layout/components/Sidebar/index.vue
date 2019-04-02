@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
-    <logo :is-collapse="isCollapse"/>
+    <logo :collapse="isCollapse" />
     <el-menu
       :default-active="$route.path"
       :collapse="isCollapse"

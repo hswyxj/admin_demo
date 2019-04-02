@@ -1,75 +1,76 @@
 <template>
-  <div class="logo">
-    <transition-group name="fade">
-      <template v-if="!isCollapse">
-        <span key="1" class="logo_title is-bold">管理后台</span>
-        <span key="2" class="logo_subtitle">PYW</span>
-      </template>
-    </transition-group>
+  <div :class="{'collapse':collapse}" class="sidebar-logo-container">
+    <transition name="sidebarLogoFade">
+      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
+        <img v-if="logo" :src="logo" class="sidebar-logo">
+        <h1 v-else class="sidebar-title">{{ title }} </h1>
+      </router-link>
+      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
+        <img v-if="logo" :src="logo" class="sidebar-logo">
+        <h1 class="sidebar-title">{{ title }} </h1>
+      </router-link>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Logo',
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['isCollapse'],
-  data() {
-    return {}
+  name: 'SidebarLogo',
+  props: {
+    collapse: {
+      type: Boolean,
+      required: true
+    }
   },
-  computed: {},
-  created() {},
-  methods: {}
+  data() {
+    return {
+      title: '管理后台',
+      logo: 'http://pyw.cn/images/logo.png'
+    }
+  }
 }
 </script>
 
-<style scoped="scoped" lang="scss">
-.fade-leave-active {
-  transition: opacity 0.2s;
+<style lang="scss" scoped>
+.sidebarLogoFade-enter-active {
+  transition: opacity 1.5s;
 }
-.fade-enter-active {
-  transition: opacity 2.5s;
-}
-.fade-enter,
-.fade-leave-to {
+.sidebarLogoFade-enter,
+.sidebarLogoFade-leave-to {
   opacity: 0;
 }
-.logo {
+.sidebar-logo-container {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  // width: 230px;
+  width: 100%;
   height: 100px;
-  line-height: 1210px;
-  background: #1f2d3d;
-  color: #fdfdfd;
+  line-height: 100px;
+  background: #2b2f3a;
   text-align: center;
-  font-size: 20px;
-  font-weight: 600;
   overflow: hidden;
-  box-sizing: border-box;
-}
-.logo_title {
-  padding: 0 5px 0 0;
-  color: #409eff;
-  font-size: 20px;
-  &.is-bold {
-    font-weight: 700;
+  & .sidebar-logo-link {
+    height: 100%;
+    width: 100%;
+    & .sidebar-logo {
+      width: 32px;
+      height: 32px;
+      vertical-align: middle;
+      margin-right: 12px;
+    }
+    & .sidebar-title {
+      display: inline-block;
+      margin: 0;
+      color: #409eff;
+      font-weight: 600;
+      line-height: 50px;
+      font-size: 20px;
+      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+      vertical-align: middle;
+    }
   }
-}
-.is-text {
-  position: absolute;
-  top: 0;
-  // left: 20px;
-}
-.is-img {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}
-.logo_subtitle {
-  font-size: 16px;
-  padding-top: 5px;
+  &.collapse {
+    .sidebar-logo {
+      margin-right: 0px;
+    }
+  }
 }
 </style>

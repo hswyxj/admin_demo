@@ -18,7 +18,8 @@ for (let i = 0; i < count; i++) {
     forecast: '@float(0, 100, 2, 2)',
     importance: '@integer(1, 3)',
     // 'type|1': ['CN', 'US', 'JP', 'EU'],
-    'status|1': ['published', 'draft', 'deleted'], // 从属性值 status的array 中随机选取 1 个元素，作为最终值。
+    // 'status|1': ['published', 'draft', 'deleted'], // 从属性值 status的array 中随机选取 1 个元素，作为最终值。
+    'status|1': ['published', 'draft'], // 从属性值 status的array 中随机选取 1 个元素，作为最终值。
     display_time: '@datetime',
     comment_disabled: true,
     pageviews: '@integer(300, 5000)',
