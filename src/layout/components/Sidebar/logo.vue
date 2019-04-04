@@ -44,7 +44,7 @@ export default {
   width: 100%;
   height: 100px;
   line-height: 100px;
-  background: #2b2f3a;
+  background: #263445;
   text-align: center;
   overflow: hidden;
   & .sidebar-logo-link {

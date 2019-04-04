@@ -12,7 +12,7 @@ for (let i = 0; i < count; i++) {
     timestamp: +Mock.Random.date('T'),
     author: '@cname',
     reviewer: '@cname',
-    title: '@ctitle(5, 10)',
+    title: '@ctitle(10, 20)',
     content_short: '我是测试数据',
     content: baseContent,
     forecast: '@float(0, 100, 2, 2)',
@@ -81,6 +81,6 @@ export default {
     data: 'success'
   }),
   batchremoveArticle: () => ({
-    data: 'success'
+    data: { code: 2000, msg: 'success' }
   })
 }

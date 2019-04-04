@@ -130,6 +130,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          // store.dispatch 可以处理被触发的 action 的处理函数返回的 Promise，并且 store.dispatch 仍旧返回 Promise
           this.$store.dispatch('LoginByUsernamePwd', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' }) // 登录成功之后重定向到首页

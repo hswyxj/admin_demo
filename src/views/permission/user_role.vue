@@ -46,8 +46,11 @@
           <el-input v-model="role.password" placeholder="请输入用户密码" show-password clearable/>
         </el-form-item>
         <el-form-item label="手机号码" prop="iphonenum" >
-          <el-input v-if="role.iphonenum" v-model.number="role.iphonenum" placeholder="请输入用户手机号码" oninput="if(value.length>11)value=value.slice(0,11)" clearable/>
+          <el-input v-model.number="role.iphonenum" autocomplete="off" placeholder="请输入用户手机号码" oninput="if(value.length>11)value=value.slice(0,11)" clearable/>
         </el-form-item>
+        <!-- <el-form-item label="手机号码" prop="iphonenum" >
+          <el-input v-if="role.iphonenum" v-model.number="role.iphonenum" placeholder="请输入用户手机号码" oninput="if(value.length>11)value=value.slice(0,11)" clearable/>
+        </el-form-item> -->
         <el-form-item label="用户邮箱" prop="email">
           <el-input v-model="role.email" placeholder="请输入用户邮箱" clearable/>
         </el-form-item>

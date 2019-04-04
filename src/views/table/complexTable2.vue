@@ -403,11 +403,20 @@ export default {
           // 被选中数组传给后端接口
           batchremoveArticle(para).then(res => {
             // 根据后端返回类型前端提示
-            this.$message({
-              message: '删除成功',
-              type: 'success',
-              duration: 2000
-            })
+            console.log(res.data.data.code)
+            if (res.data.data.code === 2000) {
+              this.$message({
+                message: '删除成功',
+                type: 'success',
+                duration: 2000
+              })
+            } else {
+              this.$message({
+                message: res.data.data.msg,
+                type: 'warning',
+                duration: 2000
+              })
+            }
             this.getList()
           })
         })
