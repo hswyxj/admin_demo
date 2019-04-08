@@ -24,8 +24,7 @@
 </p>
 
 ## 简介
-该项目是vue-cli@3构建的 4.0-beta 版本
-主要根据作者[PanJiaChen](https://github.com/PanJiaChen/) 基础模板和集成方案 :
+该项目是vue-cli@3构建的 4.0-beta 版本，由基础模板[vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)升级集成而得，主要根据作者[PanJiaChen](https://github.com/PanJiaChen/) 基础模板和集成方案 :
 
 基础模板: [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)
 
