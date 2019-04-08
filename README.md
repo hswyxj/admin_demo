@@ -1,5 +1,5 @@
 <h1 align="center">
-   vue_admin_demo
+   admin_demo
 </h1>
 
 <p align="center">
