@@ -23,21 +23,27 @@
         />
       </el-form-item>
 
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          ref="password"
-          v-model="loginForm.password"
-          placeholder="用户密码"
-          name="password"
-          auto-complete="on"
-          clearable
-          show-password
-          @keyup.enter.native="handleLogin"
-        />
-      </el-form-item>
+      <el-tooltip v-model="capsTooltip" content="大写锁定已开启" placement="right" manual>
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            placeholder="用户密码"
+            name="password"
+            auto-complete="on"
+            clearable
+            show-password
+            @keyup.native="checkCapslock"
+            @blur="capsTooltip = false"
+            @keyup.enter.native="handleLogin"
+          />
+        </el-form-item>
+      </el-tooltip>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         登 录
@@ -89,6 +95,7 @@ export default {
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
+      capsTooltip: false,
       loading: false,
       showDialog: false,
       redirect: undefined
@@ -116,6 +123,18 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    checkCapslock({ shiftKey, key } = {}) {
+      if (key && key.length === 1) {
+        if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
+          this.capsTooltip = true
+        } else {
+          this.capsTooltip = false
+        }
+      }
+      if (key === 'CapsLock' && this.capsTooltip === true) {
+        this.capsTooltip = false
+      }
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
