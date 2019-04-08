@@ -89,7 +89,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate({row})">编辑</el-button>
           <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus({row},'published')">发布
@@ -120,7 +120,7 @@
           <el-input v-model="temp.title" />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
+          <el-select v-model="temp.status" class="filter-item" placeholder="请选择">
             <el-option v-for="item in calendarStatusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
           </el-select>
         </el-form-item>
@@ -129,7 +129,7 @@
         </el-form-item>
         <el-form-item label="点评">
           <!-- v-model双向数据绑定 -->
-          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
+          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="请点评" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -188,6 +188,7 @@ export default {
   data() {
     return {
       tableKey: 0,
+      messageData: '123',
       list: [],
       total: 0,
       sels: [], // 选中显示的值
@@ -337,7 +338,6 @@ export default {
     },
     // 点击编辑
     handleUpdate({ row }) {
-      console.log('test')
       this.temp = Object.assign({}, row) // copy obj //这样就不会共用同一个对象
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
@@ -455,6 +455,10 @@ export default {
 </script>
 
 <style>
+  .item {
+  margin-top: 10px;
+  margin-right: 40px;
+  }
   .el-table .warning-row {
     background: oldlace;
   }

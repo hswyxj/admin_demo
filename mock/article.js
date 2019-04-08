@@ -12,7 +12,7 @@ for (let i = 0; i < count; i++) {
     timestamp: +Mock.Random.date('T'),
     author: '@cname',
     reviewer: '@cname',
-    title: '@ctitle(5, 20)',
+    title: '@ctitle(15, 30)',
     content_short: 'mock data',
     content: baseContent,
     forecast: '@float(0, 100, 2, 2)',

@@ -72,13 +72,6 @@ export default {
   name: 'Login',
   data() {
     // 自定义验证
-    const validateUsername = (rule, value, callback) => {
-      if (value.length < 4) {
-        callback(new Error('请输入正确的用户名'))
-      } else {
-        callback()
-      }
-    }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 8) {
         callback(new Error('密码不能少于8位'))
@@ -92,7 +85,8 @@ export default {
         password: 'admin_password'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [{ required: true, trigger: 'blur', message: '请输入正确的用户名' },
+          { min: 4, message: '用户名长度 4 个字符以上', trigger: 'blur' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
