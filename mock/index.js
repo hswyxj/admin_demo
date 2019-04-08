@@ -4,7 +4,6 @@ import { param2Obj } from '../src/utils'
 import user from './user'
 import role from './role'
 import article from './article'
-// import search from './remoteSearch'
 import channel from './channel'
 
 const mocks = [
@@ -17,7 +16,6 @@ const mocks = [
 // for front mock
 // please use it cautiously, it will redefine XMLHttpRequest,
 // which will cause many of your third-party libraries to be invalidated(like progress event).
-
 export function mockXHR() {
   // mock patch
   // https://github.com/nuysoft/Mock/issues/300
@@ -51,12 +49,12 @@ export function mockXHR() {
     }
   }
 
-  // for mock server
   for (const i of mocks) {
     Mock.mock(new RegExp(i.url), i.type || 'get', XHR2ExpressReqWrap(i.response))
   }
 }
 
+// for mock server
 const responseFake = (url, type, respond) => {
   return {
     url: new RegExp(`/mock${url}`),
