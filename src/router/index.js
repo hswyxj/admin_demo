@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
-// detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
-
 Vue.use(Router)
 
 /* Layout */
-import Layout from '../layout/Layout'
+import Layout from '@/layout'
+
+/* Router Modules */
+import tableRouter from './modules/table'
+import nestedRouter from './modules/nested'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -28,14 +29,13 @@ import Layout from '../layout/Layout'
     breadcrumb: false            if false, the item will hidden in breadcrumb(default is true)
     affix: true                  if true, the tag will affix in the tags-view
   }
-
-  constantRoutes 代表那些不需要动态判断权限的路由，如登录页、404、等通用页面。
-  asyncRoutes   代表那些需求动态判断权限并通过 addRoutes 动态添加的页面。
-
 **/
 
-// 所有权限通用路由表
-// 如首页和登录页和一些不用权限的公用页面
+/**
+ * constantRoutes
+ * a base page that does not have permission requirements
+ * all roles can be accessed
+ * */
 export const constantRoutes = [
   {
     path: '/redirect',
@@ -76,21 +76,17 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: '首页',
-        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true, breadcrumb: false }
+        name: 'Dashboard',
+        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
       }
     ]
   }
 ]
-// 实例化vue的时候只挂载constantRoutes
-export default new Router({
-  // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
 
-// 异步挂载的路由
-// 动态需要根据权限加载的路由表
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+*/
 export const asyncRoutes = [
   {
     path: '/datecard',
@@ -104,34 +100,9 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: '模板例子', icon: 'list' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/inlineEditTable'),
-        meta: { title: '表内编辑' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '树形模板' }
-      },
-      {
-        path: 'complex-table',
-        name: 'complexTable',
-        component: () => import('@/views/table/complexTable2'),
-        meta: { title: '综合模板' }
-      }
-    ]
-  },
-
+  /** when your routing map is too long, you can split it into small modules **/
+  nestedRouter,
+  tableRouter,
   {
     path: '/form',
     component: Layout,
@@ -146,70 +117,14 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: '多级菜单',
-      icon: 'list'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-  {
     path: '/permission',
     component: Layout,
-    alwaysShow: true,
+    redirect: '/permission/index',
+    alwaysShow: true, // will always show the root menu
     meta: {
       title: '权限管理',
       icon: 'list',
-      roles: ['admin', 'editor']
+      roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
@@ -218,7 +133,7 @@ export const asyncRoutes = [
         name: 'RolePermission',
         meta: {
           title: '角色管理',
-          roles: ['admin']
+          roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
@@ -227,6 +142,7 @@ export const asyncRoutes = [
         name: 'UserchannelPermission',
         meta: {
           title: '渠道权限',
+          // if do not set roles, means: this page does not require permission
           roles: ['admin']
         }
       },
@@ -241,5 +157,22 @@ export const asyncRoutes = [
       }
     ]
   },
+
   { path: '*', redirect: '/404', hidden: true }
 ]
+
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
+})
+
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
+export default router

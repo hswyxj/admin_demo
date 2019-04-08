@@ -36,23 +36,51 @@ const role_channels = [
   }
 ]
 
-export default {
-  getRolechannels() {
-    return role_channels
-  },
-  addRolechannels() {
-    return Mock.mock('@integer(300, 5000)')
-  },
-  updateRolechannels() {
-    const res = {
-      data: 'success'
+export default [
+  // get
+  {
+    url: '/channels',
+    type: 'get',
+    response: _ => {
+      return {
+        code: 20000,
+        data: role_channels
+      }
     }
-    return res
   },
-  deleteRolechannels() {
-    const res = {
-      data: 'success'
+
+  // add
+  {
+    url: '/channel',
+    type: 'post',
+    response: {
+      code: 20000,
+      data: {
+        key: Mock.mock('@integer(300, 5000)')
+      }
     }
-    return res
+  },
+
+  // update
+  {
+    url: `/channel/[A-Za-z0-9]`,
+    type: 'put',
+    response: {
+      code: 20000,
+      data: {
+        status: 'success'
+      }
+    }
+  },
+  // delete Rolechannels
+  {
+    url: '/channel/[A-Za-z0-9]',
+    type: 'delete',
+    response: {
+      code: 20000,
+      data: {
+        status: 'success'
+      }
+    }
   }
-}
+]

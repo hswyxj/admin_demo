@@ -4,22 +4,22 @@
     <!-- 列表 -->
     <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="角色标识" width="220">
-        <template slot-scope="scope">{{ scope.row.key }}</template>
+        <template slot-scope="{row}">{{ row.key }}</template>
       </el-table-column>
       <el-table-column align="center" label="角色名称" width="220">
-        <template slot-scope="scope">{{ scope.row.name }}</template>
+        <template slot-scope="{row}">{{ row.name }}</template>
       </el-table-column>
       <el-table-column align="header-center" label="描述">
-        <template slot-scope="scope">{{ scope.row.description }}</template>
+        <template slot-scope="{row}">{{ row.description }}</template>
       </el-table-column>
       <el-table-column label="更新时间" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+        <template slot-scope="{row}">
+          <span>{{ row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
-        <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑修改</el-button>
+        <template slot-scope="{row}">
+          <el-button type="primary" size="small" @click="handleEdit({row})">编辑修改</el-button>
           <!-- <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button> -->
         </template>
       </el-table-column>
@@ -27,19 +27,20 @@
 
     <!-- 编辑界面 -->
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑角色':'新增角色'">
-      <el-form :model="role" label-width="80px" label-position="left"	>
+      <el-form :model="role" label-width="80px" label-position="left">
         <el-form-item label="角色名称">
-          <el-input v-model="role.name" placeholder="请输入角色名称"/>
+          <el-input v-model="role.name" placeholder="请输入角色名称" />
         </el-form-item>
         <el-form-item label="角色描述">
           <el-input
             v-model="role.description"
             :autosize="{ minRows: 2, maxRows: 4}"
             type="textarea"
-            placeholder="请输入角色描述"/>
+            placeholder="请输入角色描述"
+          />
         </el-form-item>
         <el-form-item label="菜单权限">
-          <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps" show-checkbox node-key="path" class="permission-tree"/>
+          <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps" show-checkbox node-key="path" class="permission-tree" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -55,11 +56,11 @@
 import path from 'path'
 import { deepClone } from '@/utils'
 import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
-
 const defaultRole = {
   key: '',
   name: '',
   description: '',
+  update_time: '',
   routes: []
 }
 export default {
@@ -140,11 +141,11 @@ export default {
       this.dialogType = 'new'
       this.dialogVisible = true
     },
-    handleEdit(scope) {
+    handleEdit({ row }) {
       this.dialogType = 'edit'
       this.dialogVisible = true
       this.checkStrictly = true
-      this.role = deepClone(scope.row) // deepClone深克隆
+      this.role = deepClone(row) // deepClone深克隆
       this.$nextTick(() => {
         const routes = this.generateRoutes(this.role.routes)
         this.$refs.tree.setCheckedNodes(this.generateArr(routes))
@@ -160,7 +161,7 @@ export default {
         type: 'warning'
       })
         .then(async() => {
-          await deleteRole(row.id)
+          await deleteRole(row.key)
           this.rolesList.splice($index, 1)
           this.$message({
             type: 'success',
@@ -187,8 +188,8 @@ export default {
       const isEdit = this.dialogType === 'edit'
       const checkedKeys = this.$refs.tree.getCheckedKeys()
       this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys)
+      this.role.update_time = new Date().getTime()
       if (isEdit) {
-        this.role.update_time = new Date().getTime()
         await updateRole(this.role.key, this.role)
         for (let index = 0; index < this.rolesList.length; index++) {
           if (this.rolesList[index].key === this.role.key) {
@@ -198,11 +199,11 @@ export default {
         }
       } else {
         const { data } = await addRole(this.role)
-        this.role.key = data
+        this.role.key = data.key
         this.rolesList.push(this.role)
       }
       const { description, key, name } = this.role
-      // console.log(this.role)  // this.role 提交的角色权限数据
+      // console.log(this.role) // this.role 提交的角色权限数据
       this.dialogVisible = false
       this.$notify({
         title: '成功',

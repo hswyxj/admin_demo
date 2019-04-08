@@ -1,14 +1,16 @@
 <template>
   <div class="navbar">
-    <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
-    <breadcrumb />
-    <el-dropdown class="avatar-container" trigger="click">
+    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+
+    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
+
+    <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
       <div class="avatar-wrapper">
         <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-        <i class="el-icon-caret-bottom"/>
+        <i class="el-icon-caret-bottom" />
       </div>
-      <el-dropdown-menu slot="dropdown" class="user-dropdown">
-        <router-link class="inlineBlock" to="/">
+      <el-dropdown-menu slot="dropdown">
+        <router-link to="/">
           <el-dropdown-item>
             首页
           </el-dropdown-item>
@@ -34,17 +36,18 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'name',
+      'avatar',
+      'device'
     ])
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('ToggleSideBar')
+      this.$store.dispatch('app/toggleSideBar')
     },
-    logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
+    async logout() {
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
 }
@@ -56,7 +59,8 @@ export default {
   line-height: 50px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.12), 0 0 3px 0 rgba(0,0,0,.04);
   .hamburger-container {
-    line-height: 58px;
+    cursor: pointer;
+    line-height: 50px;
     height: 50px;
     float: left;
     padding: 0 10px;
