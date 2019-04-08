@@ -90,8 +90,8 @@ export default {
         return callback(new Error('请输入用户账号'))
       }
       setTimeout(() => {
-        if (value.length < 6) {
-          callback(new Error('用户账号必须大于6位'))
+        if (value.length < 4) {
+          callback(new Error('用户账号必须大于4位'))
         } else {
           callback()
         }
