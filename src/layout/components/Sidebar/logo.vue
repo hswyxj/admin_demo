@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title: '管理后台',
-      logo: 'http://pyw.cn/images/logo.png'
+      logo: './logo.png'
     }
   }
 }

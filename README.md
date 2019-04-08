@@ -1,39 +1,92 @@
-# admin_demo
+<h1 align="center">
+   admin_demo
+</h1>
 
-> A minimal vue admin template with Element UI & axios & iconfont & permission control & lint
+<p align="center">
+  <a href="https://github.com/vuejs/vue">
+    <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg" alt="vue">
+  </a>
+  <a href="https://github.com/ElemeFE/element">
+    <img src="https://img.shields.io/badge/element--ui-2.7.0-brightgreen.svg" alt="element-ui">
+  </a>
+  <a href="https://github.com/hswyxj/admin_demo/master/LICENSE">
+    <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license">
+  </a>
+  <a href="https://github.com/hswyxj/admin_demo/releases">
+    <img src="https://img.shields.io/github/release/PanJiaChen/vue-element-admin.svg" alt="GitHub release">
+  </a>
+  <a href="https://gitter.im/vue-element-admin/discuss">
+    <img src="https://badges.gitter.im/Join%20Chat.svg" alt="gitter">
+  </a>
+  <a href="https://panjiachen.gitee.io/vue-element-admin-site/zh/donate">
+    <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
+  </a>
+</p>
 
-## demo url 
-https://hswyxj.github.io/admin_demo/
+## 简介
+该项目是vue-cli@3构建的 4.0-beta 版本，由基础模板[vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)升级集成而得，主要根据作者[PanJiaChen](https://github.com/PanJiaChen/) 基础模板和集成方案 :
 
+基础模板: [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)
 
+集成方案: [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
-## Build Setup
-```bash
-# Clone project
-git clone https://github.com/hswyxj/admin_demo.git
-
-# Install dependencies
-npm install
-
-# Serve with hot reload at localhost:9528
-npm run dev
-
-# Build for production with minification
-npm run build
-
-# Build for production and view the bundle analyzer report
-npm run build --report
-```
-
-## 注意：该项目使用 element-ui@2.3.0+ 版本，所以最低兼容 vue@2.5.0+
-
+## 前序
 > TIP
  强烈建议不要用直接使用 cnpm 安装，会有各种诡异的 bug，可以通过重新指定 registry 来解决 npm 安装速度慢的问题。若还是不行，可使用 yarn 替代 npm。
  Windows 用户若安装不成功，很大概率是node-sass安装失败，[解决方案](https://github.com/PanJiaChen/vue-element-admin/issues/24)
 另外因为 node-sass 是依赖 python环境的，如果你之前没有安装和配置过的话，需要自行查看一下相关安装教程。
-```
+
+## 在线demo展示
+https://hswyxj.github.io/admin_demo/
+
+
+## 开发
+
+```bash
+# 克隆项目
+git clone https://github.com/hswyxj/admin_demo.git
+
+# 进入项目目录
+cd admin_demo
+
+# 安装依赖
+npm install
+
+# 建议不要用 cnpm 安装 会有各种诡异的bug 可以通过如下操作解决 npm 下载速度慢的问题
 npm install --registry=https://registry.npm.taobao.org
+
+# 本地开发 启动服务
+npm run dev
+
+浏览器访问 http://localhost:9527
 ```
+
+## 发布
+
+```bash
+# 构建测试环境
+npm run build:stage
+
+# 构建生产环境
+npm run build:prod
+```
+
+## 其它
+
+```bash
+# 预览发布环境效果
+npm run preview
+
+# 预览发布环境效果 + 静态资源分析
+npm run preview -- --report
+
+# 代码格式检查
+npm run lint
+
+# 代码格式检查并自动修复
+npm run lint -- --fix
+```
+
 
 # 移除mock 用实际接口
  - 部分mock部分实际接口，只要把mock/index.js对应接口拦截地址注释即可。
@@ -103,8 +156,13 @@ setting.json：
 # 目录结构
 ```
 - ├── build                      // 构建相关
-- ├── config                     // 配置相关
-- ├── docs                       // 项目build打包的最终产物（ 忽略- 打包目录可以在config/index.js设置修改）
+- ├── mock                       # 项目mock 模拟数据
+- ├── plop-templates             # 基本模板
+- ├── public                     # 静态资源
+- │   │── Tinymce                # 富文本
+- │   │── favicon.ico            # favicon图标
+- │   └── index.html             # html模板
+- ├── docs                       // 项目build打包的最终产物（ 忽略- 打包目录可以在vue.config.js设置修改）
 - ├── src                        // 源代码
 - │   ├── api                    // 所有api请求
 - │   ├── assets                 // 主题 字体等静态资源
@@ -118,7 +176,7 @@ setting.json：
 - │   ├── directive              // 全局指令
 - │   ├── filters                // 全局过滤 filter
 - │   ├── icons                  // 项目所有 svg icons
-- │   ├── mock                   // 项目mock 模拟数据
+- │   ├── layout                 // 全局 layout
 - │   ├── router                 // 路由配置
 - │   ├── store                  // 全局 store管理（状态管理）
 - │   ├── styles                 // 全局样式
@@ -135,14 +193,12 @@ setting.json：
 - │   ├── App.vue                // 入口页面
 - │   ├── main.js                // 入口文件 加载组件 初始化等
 - │   └── permission.js          // 权限管理
-- ├── static                     // 第三方不打包资源
-- │   └── Tinymce                // 富文本
-- ├── .babelrc                   // babel-loader 配置
+- ├── tests                      // 测试
+- ├── .env.xxx                   // 环境变量配置
 - ├── .eslintrc.js               // eslint 配置项
-- ├── .gitignore                 // git 忽略项
+- ├── .babelrc                   // babel-loader 配置
 - ├── .travis.yml                // 自动化CI配置
-- ├── favicon.ico                // favicon图标
-- ├── index.html                 // html模板
+- ├── vue.config.js              // vue-cli 配置
 - └── package.json               // package.json
 ```
 

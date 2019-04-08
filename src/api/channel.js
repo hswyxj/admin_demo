@@ -1,16 +1,8 @@
 import request from '@/utils/request'
 
-export function getRolechannellist(query) {
-  return request({
-    url: '/channel/list',
-    method: 'get',
-    params: query
-  })
-}
-
 export function getRolechannels() {
   return request({
-    url: '/channel',
+    url: '/channels',
     method: 'get'
   })
 }
@@ -23,9 +15,9 @@ export function createRolechannel(data) {
   })
 }
 
-export function updateRolechannels(key, data) {
+export function updateRolechannels(id, data) {
   return request({
-    url: `/channel/${key}`,
+    url: `/channel/${id}`,
     method: 'put',
     params: { data }
   })

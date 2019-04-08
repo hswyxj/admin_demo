@@ -3,24 +3,24 @@
     <!-- 列表 -->
     <el-table :data="rolechannelList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="角色归属" width="220">
-        <template slot-scope="scope">{{ scope.row.role_name }}</template>
+        <template slot-scope="{row}">{{ row.role_name }}</template>
       </el-table-column>
       <el-table-column align="center" label="渠道列表">
-        <template slot-scope="scope">
-          <el-tag v-for="item in scope.row.channel_name" :key="item" :label="item" :value="item">{{ item }}</el-tag>
+        <template slot-scope="{row}">
+          <el-tag v-for="item in row.channel_name" :key="item" :label="item" :value="item">{{ item }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="header-center" label="描述">
-        <template slot-scope="scope">{{ scope.row.description }}</template>
+        <template slot-scope="{row}">{{ row.description }}</template>
       </el-table-column>
       <el-table-column label="更新时间" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+        <template slot-scope="{row}">
+          <span>{{ row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
-        <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑修改</el-button>
+        <template slot-scope="{row}">
+          <el-button type="primary" size="small" @click="handleEdit({row})">编辑修改</el-button>
           <!-- <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button> -->
         </template>
       </el-table-column>
@@ -28,20 +28,16 @@
 
     <!-- 编辑界面 -->
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑渠道权限':''">
-      <el-form ref="channel" :model="channel" :rules="rules" label-width="80px" label-position="left"	>
-        <el-form-item label="角色归属" prop="role_name" >
-          <el-select
-            v-model="channel.role_name"
-            width="220"
-            placeholder="角色选择"
-            clearable>
-            <el-option v-for="item in rolechannelList" :key="item.id" :label="item.role_name" :value="item.role_name"/>
+      <el-form ref="channel" :model="channel" :rules="rules" label-width="80px" label-position="left">
+        <el-form-item label="角色归属" prop="role_name">
+          <el-select v-model="channel.role_name" width="220" placeholder="角色选择" clearable>
+            <el-option v-for="item in rolechannelList" :key="item.id" :label="item.role_name" :value="item.role_name" />
           </el-select>
         </el-form-item>
         <el-form-item label="渠道列表" prop="channel_name">
-          <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+          <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
           <el-checkbox-group v-model="channel.channel_name" @change="handleCheckedchannelnamesChange">
-            <el-checkbox v-for="item in channel.channel_namelist" :key="item" :label="item" :value="item" name="channel_name"/>
+            <el-checkbox v-for="item in channel.channel_namelist" :key="item" :label="item" :value="item" name="channel_name" />
           </el-checkbox-group>
           <!-- <el-select
             v-model="channel.channel_name"
@@ -59,7 +55,8 @@
             v-model="channel.description"
             :autosize="{ minRows: 3, maxRows: 4}"
             type="textarea"
-            placeholder="请输入用户描述"/>
+            placeholder="请输入用户描述"
+          />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -73,8 +70,7 @@
 <script>
 // import path from 'path'
 import { deepClone } from '@/utils'
-import { getRolechannels, updateRolechannels, createRolechannel } from '@/api/channel'
-
+import { getRolechannels, updateRolechannels } from '@/api/channel'
 const defaultchannel = {
   id: '',
   role_name: '',
@@ -100,7 +96,6 @@ export default {
       }
     }
   },
-
   created() {
     this.getRolechannels()
   },
@@ -122,10 +117,10 @@ export default {
       this.checkAll = checkedCount === this.channel.channel_namelist.length
       this.isIndeterminate = checkedCount > 0 && checkedCount < this.channel.channel_namelist.length
     },
-    handleEdit(scope) {
+    handleEdit({ row }) {
       this.dialogType = 'edit'
       this.dialogVisible = true
-      this.channel = deepClone(scope.row)
+      this.channel = deepClone(row)
     },
     async confirmRole(channel) {
       this.$refs[channel].validate((valid) => {
@@ -140,11 +135,12 @@ export default {
                 break
               }
             }
-          } else {
-            const { data } = createRolechannel(this.channel)
-            this.channel.id = data
-            this.rolechannelList.push(this.channel)
           }
+          // } else {
+          //   const { data } = createRolechannel(this.channel)
+          //   this.channel.id = data
+          //   this.rolechannelList.push(this.channel)
+          // }
           const { description, role_name, channel_name, game_package_name } = this.channel
           // console.log(this.role)  // this.role 提交的角色权限数据
           this.dialogVisible = false
@@ -176,4 +172,3 @@ export default {
   }
 }
 </style>
-

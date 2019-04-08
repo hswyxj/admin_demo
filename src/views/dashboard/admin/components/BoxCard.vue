@@ -4,11 +4,11 @@
       <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png">
     </div>
     <div style="position:relative;">
-      <pan-thumb :image="avatar" class="panThumb"/>
-      <mallki class-name="mallki-text" text="管理后台"/>
+      <pan-thumb :image="avatar" class="panThumb" />
+      <mallki class-name="mallki-text" text="管理后台" />
       <div style="padding-top:35px;" class="progress-item">
         <span>管理后台</span>
-        <el-progress :percentage="100"/>
+        <el-progress :percentage="100" />
       </div>
     </div>
   </el-card>
@@ -47,14 +47,14 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" >
+<style lang="scss" >
 .box-card-component{
   .el-card__header {
     padding: 0px!important;
   }
 }
 </style>
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
 .box-card-component {
   .box-card-header {
     position: relative;

@@ -1,60 +1,57 @@
 import Mock from 'mockjs'
-import loginAPI from './login'
-import articleAPI from './article'
-// import remoteSearchAPI from './remoteSearch'
-// import transactionAPI from './transaction'
-import roleAPI from './role'
-import rolechannelAPI from './channel'
+import mocks from './mocks'
+import { param2Obj } from '../src/utils'
 
-// 修复在使用 MockJS 情况下，设置 withCredentials = true，且未被拦截的跨域请求丢失 Cookies 的问题
-// https://github.com/nuysoft/Mock/issues/300
-Mock.XHR.prototype.proxy_send = Mock.XHR.prototype.send
-Mock.XHR.prototype.send = function() {
-  if (this.custom.xhr) {
-    this.custom.xhr.withCredentials = this.withCredentials || false
-    if (this.responseType) {
-      this.custom.xhr.responseType = this.responseType
+const MOCK_API_BASE = '/mock'
+
+export function mockXHR() {
+  // 修复在使用 MockJS 情况下，设置 withCredentials = true，且未被拦截的跨域请求丢失 Cookies 的问题
+  // https://github.com/nuysoft/Mock/issues/300
+  Mock.XHR.prototype.proxy_send = Mock.XHR.prototype.send
+  Mock.XHR.prototype.send = function() {
+    if (this.custom.xhr) {
+      this.custom.xhr.withCredentials = this.withCredentials || false
+
+      if (this.responseType) {
+        this.custom.xhr.responseType = this.responseType
+      }
+    }
+    this.proxy_send(...arguments)
+  }
+
+  function XHR2ExpressReqWrap(respond) {
+    return function(options) {
+      let result = null
+      if (respond instanceof Function) {
+        const { body, type, url } = options
+        // https://expressjs.com/en/4x/api.html#req
+        result = respond({
+          method: type,
+          body: JSON.parse(body),
+          query: param2Obj(url)
+        })
+      } else {
+        result = respond
+      }
+      return Mock.mock(result)
     }
   }
-  this.proxy_send(...arguments)
+
+  for (const i of mocks) {
+    Mock.mock(new RegExp(i.url), i.type || 'get', XHR2ExpressReqWrap(i.response))
+  }
 }
 
-// Mock.setup({
-//   timeout: '350-600'
-// })
+const responseFake = (url, type, respond) => {
+  return {
+    url: new RegExp(`${MOCK_API_BASE}${url}`),
+    type: type || 'get',
+    response(req, res) {
+      res.json(Mock.mock(respond instanceof Function ? respond(req, res) : respond))
+    }
+  }
+}
 
-// 登录相关
-Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsernamePwd)
-Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
-Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
-
-// 角色相关
-Mock.mock(/\/routes/, 'get', roleAPI.getRoutes)
-Mock.mock(/\/roles/, 'get', roleAPI.getRoles)
-Mock.mock(/\/roles$/, 'post', roleAPI.addRole)
-Mock.mock(/\/roles\/[A-Za-z0-9]+/, 'put', roleAPI.updateRole)
-Mock.mock(/\/roles\/[A-Za-z0-9]+/, 'delete', roleAPI.deleteRole)
-
-// 渠道权限
-Mock.mock(/\/channel/, 'get', rolechannelAPI.getRolechannels)
-Mock.mock(/\/channel$/, 'post', rolechannelAPI.addRolechannels)
-Mock.mock(/\/channel\/[A-Za-z0-9]+/, 'put', rolechannelAPI.updateRolechannels)
-Mock.mock(/\/channel\/[A-Za-z0-9]+/, 'delete', rolechannelAPI.deleteRolechannels)
-
-// 角色账号
-
-// 文章相关
-Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
-Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)
-Mock.mock(/\/article\/pv/, 'get', articleAPI.getPv)
-Mock.mock(/\/article\/create/, 'post', articleAPI.createArticle)
-Mock.mock(/\/article\/update/, 'post', articleAPI.updateArticle)
-Mock.mock(/\/article\/batchremove/, 'delete', articleAPI.batchremoveArticle)
-
-// 搜索相关
-// Mock.mock(/\/search\/user/, 'get', remoteSearchAPI.searchUser)
-
-// 账单相关
-// Mock.mock(/\/transaction\/list/, 'get', transactionAPI.getList)
-
-export default Mock
+export default mocks.map(route => {
+  return responseFake(route.url, route.type, route.response)
+})

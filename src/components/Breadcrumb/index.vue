@@ -31,7 +31,7 @@ export default {
       let matched = this.$route.matched.filter(item => item.name)
 
       const first = matched[0]
-      if (first && first.name !== 'dashboard') {
+      if (first && first.name.trim().toLocaleLowerCase() !== 'Dashboard'.toLocaleLowerCase()) {
         matched = [{ path: '/dashboard', meta: { title: '首页' }}].concat(matched)
       }
 
@@ -55,15 +55,15 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-  .app-breadcrumb.el-breadcrumb {
-    display: inline-block;
-    font-size: 14px;
-    line-height: 50px;
-    margin-left: 10px;
-    .no-redirect {
-      color: #97a8be;
-      cursor: text;
-    }
+<style lang="scss" scoped>
+.app-breadcrumb.el-breadcrumb {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 50px;
+  margin-left: 8px;
+  .no-redirect {
+    color: #97a8be;
+    cursor: text;
   }
+}
 </style>

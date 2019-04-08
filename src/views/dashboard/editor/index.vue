@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
   .emptyGif {
     display: block;
     width: 45%;

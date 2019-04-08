@@ -23,7 +23,7 @@
 
       <el-table-column width="100px" label="重要性">
         <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon"/>
+          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
 
@@ -36,7 +36,7 @@
       <el-table-column min-width="300px" label="标题">
         <template slot-scope="scope">
           <template v-if="scope.row.edit">
-            <el-input v-model="scope.row.title" class="edit-input" size="small"/>
+            <el-input v-model="scope.row.title" class="edit-input" size="small" />
             <el-button class="cancel-btn" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(scope.row)">取消</el-button>
           </template>
           <span v-else>{{ scope.row.title }}</span>
@@ -93,18 +93,17 @@ export default {
     this.getList()
   },
   methods: {
-    getList() {
+    async getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.total = response.data.total
-        const items = response.data.items
-        this.list = items.map(v => {
-          this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
-          v.originalTitle = v.title //  will be used when user click the cancel botton
-          return v
-        })
-        this.listLoading = false
+      const { data } = await fetchList(this.listQuery)
+      this.total = data.total
+      const items = data.items
+      this.list = items.map(v => {
+        this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
+        v.originalTitle = v.title //  will be used when user click the cancel botton
+        return v
       })
+      this.listLoading = false
     },
     cancelEdit(row) {
       row.title = row.originalTitle

@@ -4,62 +4,60 @@
     <!-- 列表 -->
     <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="角色归属" width="220">
-        <template slot-scope="scope">{{ scope.row.name }}</template>
+        <template slot-scope="{row}">{{ row.name }}</template>
       </el-table-column>
       <el-table-column align="center" label="用户账号" width="220">
-        <template slot-scope="scope">{{ scope.row.username }}</template>
+        <template slot-scope="{row}">{{ row.username }}</template>
       </el-table-column>
       <el-table-column align="center" label="手机号码" width="220">
-        <template slot-scope="scope">{{ scope.row.iphonenum }}</template>
+        <template slot-scope="{row}">{{ row.iphonenum }}</template>
       </el-table-column>
       <el-table-column align="center" label="用户邮箱" width="220">
-        <template slot-scope="scope">{{ scope.row.email }}</template>
+        <template slot-scope="{row}">{{ row.email }}</template>
       </el-table-column>
       <el-table-column align="header-center" label="描述">
-        <template slot-scope="scope">{{ scope.row.description }}</template>
+        <template slot-scope="{row}">{{ row.description }}</template>
       </el-table-column>
       <el-table-column label="更新时间" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+        <template slot-scope="{row}">
+          <span>{{ row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
-        <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑修改</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
+        <template slot-scope="{row}">
+          <el-button type="primary" size="small" @click="handleEdit({row})">编辑修改</el-button>
+          <el-button type="danger" size="small" @click="handleDelete({row})">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 编辑界面 -->
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑用户资料':'新增用户'" >
-      <el-form ref="role" :model="role" :rules="rules" label-width="80px" label-position="left"	>
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑用户资料':'新增用户'">
+      <el-form ref="role" :model="role" :rules="rules" label-width="80px" label-position="left">
         <el-form-item label="角色归属" prop="name">
-          <el-select v-model="role.name" placeholder="角色选择" clearable>
-            <el-option v-for="item in rolesList" :key="item.key" :label="item.name" :value="item.name"/>
+          <el-select v-model="role.name" placeholder="角色选择">
+            <el-option v-for="item in rolelistname" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
-        <el-form-item label="用户账号" prop="username" >
-          <el-input v-model="role.username" placeholder="请输入用户账号" clearable/>
+        <el-form-item label="用户账号" prop="username">
+          <el-input v-model="role.username" placeholder="请输入用户账号" clearable />
         </el-form-item>
         <el-form-item label="用户密码" prop="password">
-          <el-input v-model="role.password" placeholder="请输入用户密码" show-password clearable/>
+          <el-input v-model="role.password" placeholder="请输入用户密码" show-password clearable />
         </el-form-item>
-        <el-form-item label="手机号码" prop="iphonenum" >
-          <el-input v-model.number="role.iphonenum" autocomplete="off" placeholder="请输入用户手机号码" oninput="if(value.length>11)value=value.slice(0,11)" clearable/>
+        <el-form-item label="手机号码" prop="iphonenum">
+          <el-input v-model.number="role.iphonenum" placeholder="请输入用户手机号码" oninput="if(value.length>11)value=value.slice(0,11)" clearable />
         </el-form-item>
-        <!-- <el-form-item label="手机号码" prop="iphonenum" >
-          <el-input v-if="role.iphonenum" v-model.number="role.iphonenum" placeholder="请输入用户手机号码" oninput="if(value.length>11)value=value.slice(0,11)" clearable/>
-        </el-form-item> -->
         <el-form-item label="用户邮箱" prop="email">
-          <el-input v-model="role.email" placeholder="请输入用户邮箱" clearable/>
+          <el-input v-model="role.email" placeholder="请输入用户邮箱" clearable />
         </el-form-item>
         <el-form-item label="用户描述">
           <el-input
             v-model="role.description"
             :autosize="{ minRows: 3, maxRows: 4}"
             type="textarea"
-            placeholder="请输入用户描述"/>
+            placeholder="请输入用户描述"
+          />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -75,13 +73,13 @@
 // import path from 'path'
 import { deepClone } from '@/utils'
 import { getRoles, addRole, deleteRole, updateRole } from '@/api/role'
-
 const defaultRole = {
   key: '',
   name: '',
   username: '',
   password: '',
   email: '',
+  update_time: '',
   description: ''
 }
 export default {
@@ -112,6 +110,7 @@ export default {
     return {
       role: Object.assign({}, defaultRole),
       rolesList: [],
+      rolelistname: [],
       dialogVisible: false,
       dialogType: 'new',
       checkStrictly: false,
@@ -122,12 +121,10 @@ export default {
         // iphonenum: [{ type: 'number', required: true, message: '请输入用户手机号码', trigger: 'blur' }],
         iphonenum: [{ validator: checkIphonenum, required: true, trigger: 'blur' },
           { type: 'number', message: '手机号码必须为数字值' }],
-
         email: [{ required: true, message: '请输入用户邮箱', trigger: 'blur' }]
       }
     }
   },
-
   created() {
     this.getRoles()
   },
@@ -138,13 +135,11 @@ export default {
       // await 需要等待await后面的函数运行完并且有了返回结果之后，才继续执行下面的代码。这正是同步的效果
       const res = await getRoles()
       this.rolesList = res.data
-      // console.log(this.role)
+      this.rolelistname = res.data[0].rolelistname
+      // console.log(this.rolesList)
     },
     handleAddRole() {
       this.role = Object.assign({}, defaultRole)
-      // if (this.$refs.tree) {
-      //   this.$refs.tree.setCheckedNodes([])
-      // }
       this.dialogType = 'new'
       this.dialogVisible = true
       this.$nextTick(() => { // 等整个视图都渲染完毕后
@@ -152,10 +147,10 @@ export default {
         // console.log(this.$refs) //ref属性的所有元素的引用
       })
     },
-    handleEdit(scope) {
+    handleEdit({ row }) {
       this.dialogType = 'edit'
       this.dialogVisible = true
-      this.role = deepClone(scope.row)
+      this.role = deepClone(row)
     },
     handleDelete({ $index, row }) {
       this.$confirm('确定要删除该角色吗?', 'Warning', {
@@ -164,7 +159,7 @@ export default {
         type: 'warning'
       })
         .then(async() => {
-          await deleteRole(row.id)
+          await deleteRole(row.key)
           this.rolesList.splice($index, 1)
           this.$message({
             type: 'success',
@@ -173,24 +168,28 @@ export default {
         })
         .catch(err => { console.error(err) })
     },
-    async confirmRole(role) {
-      this.$refs[role].validate((valid) => {
-        const isEdit = this.dialogType === 'edit'
-        if (valid) {
-          if (isEdit) {
-            this.role.update_time = new Date().getTime()
-            updateRole(this.role.key, this.role)
-            for (let index = 0; index < this.rolesList.length; index++) {
-              if (this.rolesList[index].key === this.role.key) {
-                this.rolesList.splice(index, 1, Object.assign({}, this.role))
-                break
-              }
-            }
-          } else {
-            const { data } = addRole(this.role)
-            this.role.key = data
-            this.rolesList.push(this.role)
+    async handleUpdate() {
+      const isEdit = this.dialogType === 'edit'
+      this.role.update_time = new Date().getTime()
+      if (isEdit) {
+        await updateRole(this.role.key, this.role)
+        for (let index = 0; index < this.rolesList.length; index++) {
+          if (this.rolesList[index].key === this.role.key) {
+            this.rolesList.splice(index, 1, Object.assign({}, this.role))
+            break
           }
+        }
+      } else {
+        addRole(this.role)
+        const { data } = await addRole(this.role)
+        this.role.key = data.key
+        this.rolesList.push(this.role)
+      }
+    },
+    confirmRole(role) {
+      this.$refs[role].validate((valid) => {
+        if (valid) {
+          this.handleUpdate()
           const { description, name, username } = this.role
           // console.log(this.role)  // this.role 提交的角色权限数据
           this.dialogVisible = false

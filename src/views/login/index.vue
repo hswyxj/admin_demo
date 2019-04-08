@@ -103,7 +103,7 @@ export default {
     }
   },
   created() {
-    // window.addEventListener('hashchange', this.afterQRScan)
+    // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
     if (this.loginForm.username === '') {
@@ -113,31 +113,22 @@ export default {
     }
   },
   destroyed() {
-    // window.removeEventListener('hashchange', this.afterQRScan)
+    // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    // showPwd() {
-    //   if (this.passwordType === 'password') {
-    //     this.passwordType = ''
-    //   } else {
-    //     this.passwordType = 'password'
-    //   }
-    //   this.$nextTick(() => {
-    //     this.$refs.password.focus()
-    //   })
-    // },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           // store.dispatch 可以处理被触发的 action 的处理函数返回的 Promise，并且 store.dispatch 仍旧返回 Promise
-          this.$store.dispatch('LoginByUsernamePwd', this.loginForm).then(() => {
-            this.loading = false
-            this.$router.push({ path: this.redirect || '/' }) // 登录成功之后重定向到首页
-            console.log(this.redirect)
-          }).catch(() => {
-            this.loading = false
-          })
+          this.$store.dispatch('user/login', this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || '/' })
+              this.loading = false
+            })
+            .catch(() => {
+              this.loading = false
+            })
         } else {
           console.log('error submit!!')
           return false
@@ -148,18 +139,15 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" >
+<style lang="scss" >
   /* 修复input 背景不协调 和光标变色 */
   /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-  $bg:#283443;
-  $light_gray:#eee;
-  $cursor: #fff;
-  @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-    .login-container .el-input input{
-      color: $cursor;
-      &::first-line {
-        color: $light_gray;
-      }
+$bg:#283443;
+$light_gray:#fff;
+$cursor: #fff;
+@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+  .login-container .el-input input {
+    color: $cursor;
     }
   }
   /* reset element-ui css */
@@ -169,30 +157,25 @@ export default {
       height: 47px;
       width: 85%;
       input {
-        background: transparent;
-        border: 0px;
-        -webkit-appearance: none;
-        border-radius: 0px;
-        padding: 12px 5px 12px 15px;
-        color: $light_gray;
-        height: 47px;
-        caret-color: $cursor;
-        &:-webkit-autofill {
-          box-shadow: 0 0 0px 1000px $bg inset !important;
-          -webkit-text-fill-color: $cursor !important;
-        }
+      background: transparent;
+      border: 0px;
+      -webkit-appearance: none;
+      border-radius: 0px;
+      padding: 12px 5px 12px 15px;
+      color: $light_gray;
+      height: 47px;
       }
     }
     .el-form-item {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      color: #454545;
-    }
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    color: #454545;
   }
+}
 </style>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
