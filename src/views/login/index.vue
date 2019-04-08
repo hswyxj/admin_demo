@@ -86,7 +86,7 @@ export default {
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入正确的用户名' },
-          { min: 4, message: '用户名长度 4 个字符以上', trigger: 'blur' }],
+          { min: 4, message: '用户账号长度 4 个字符以上', trigger: 'blur' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
