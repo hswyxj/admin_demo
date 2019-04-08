@@ -4,49 +4,49 @@
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
 
       <el-table-column align="center" label="序号" width="80">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+        <template slot-scope="{row}">
+          <span>{{ row.id }}</span>
         </template>
       </el-table-column>
 
       <el-table-column width="180px" align="center" label="时间">
-        <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+        <template slot-scope="{row}">
+          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
       <el-table-column width="120px" align="center" label="作者">
-        <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+        <template slot-scope="{row}">
+          <span>{{ row.author }}</span>
         </template>
       </el-table-column>
 
       <el-table-column width="100px" label="重要性">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon" />
+        <template slot-scope="{row}">
+          <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
 
       <el-table-column class-name="status-col" label="状态" width="110">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+        <template slot-scope="{row}">
+          <el-tag :type="row.status | statusFilter">{{ row.status }}</el-tag>
         </template>
       </el-table-column>
 
       <el-table-column min-width="300px" label="标题">
-        <template slot-scope="scope">
-          <template v-if="scope.row.edit">
-            <el-input v-model="scope.row.title" class="edit-input" size="small" />
-            <el-button class="cancel-btn" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(scope.row)">取消</el-button>
+        <template slot-scope="{row}">
+          <template v-if="row.edit">
+            <el-input v-model="row.title" class="edit-input" size="small" />
+            <el-button class="cancel-btn" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit({row})">取消</el-button>
           </template>
-          <span v-else>{{ scope.row.title }}</span>
+          <span v-else>{{ row.title }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Actions" width="120">
-        <template slot-scope="scope">
-          <el-button v-if="scope.row.edit" type="success" size="small" icon="el-icon-circle-check-outline" @click="confirmEdit(scope.row)">确定</el-button>
-          <el-button v-else type="primary" size="small" icon="el-icon-edit" @click="scope.row.edit=!scope.row.edit">编辑</el-button>
+      <el-table-column align="center" label="操作">
+        <template slot-scope="{row}">
+          <el-button v-if="row.edit" type="success" size="small" icon="el-icon-circle-check-outline" @click="confirmEdit({row})">确定</el-button>
+          <el-button v-else type="primary" size="small" icon="el-icon-edit" @click="row.edit=!row.edit">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -105,19 +105,19 @@ export default {
       })
       this.listLoading = false
     },
-    cancelEdit(row) {
+    cancelEdit({ row }) {
       row.title = row.originalTitle
       row.edit = false
       this.$message({
-        message: 'The title has been restored to the original value',
+        message: '标题已还原为原始值',
         type: 'warning'
       })
     },
-    confirmEdit(row) {
+    confirmEdit({ row }) {
       row.edit = false
       row.originalTitle = row.title
       this.$message({
-        message: 'The title has been edited',
+        message: '标题已被编辑',
         type: 'success'
       })
     }
