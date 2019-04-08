@@ -15,6 +15,9 @@
   <a href="https://github.com/hswyxj/admin_demo/releases">
     <img src="https://img.shields.io/github/release/PanJiaChen/vue-element-admin.svg" alt="GitHub release">
   </a>
+  <a href="https://vue-test-utils.vuejs.org/zh">
+    <img src="https://img.shields.io/badge/vue-test-utils.svg" alt="donate">
+  </a>
   <a href="https://gitter.im/vue-element-admin/discuss">
     <img src="https://badges.gitter.im/Join%20Chat.svg" alt="gitter">
   </a>
@@ -193,7 +196,7 @@ setting.json：
 - │   ├── App.vue                // 入口页面
 - │   ├── main.js                // 入口文件 加载组件 初始化等
 - │   └── permission.js          // 权限管理
-- ├── tests                      // 测试
+- ├── tests                      // 单元测试
 - ├── .env.xxx                   // 环境变量配置
 - ├── .eslintrc.js               // eslint 配置项
 - ├── .babelrc                   // babel-loader 配置

@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: '管理后台',
+      title: '管理系统',
       logo: './logo.png'
     }
   }

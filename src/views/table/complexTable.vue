@@ -114,7 +114,7 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="时间" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
+          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="请选择时间" />
         </el-form-item>
         <el-form-item label="标题" prop="title">
           <el-input v-model="temp.title" />
@@ -336,7 +336,7 @@ export default {
       })
     },
     // 点击编辑
-    handleUpdate(row) {
+    handleUpdate({ row }) {
       console.log('test')
       this.temp = Object.assign({}, row) // copy obj //这样就不会共用同一个对象
       this.temp.timestamp = new Date(this.temp.timestamp)

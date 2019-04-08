@@ -5,9 +5,9 @@
     </div>
     <div style="position:relative;">
       <pan-thumb :image="avatar" class="panThumb" />
-      <mallki class-name="mallki-text" text="管理后台" />
+      <mallki class-name="mallki-text" text="管理系统" />
       <div style="padding-top:35px;" class="progress-item">
-        <span>管理后台</span>
+        <span>管理系统</span>
         <el-progress :percentage="100" />
       </div>
     </div>
