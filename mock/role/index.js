@@ -5,6 +5,8 @@ import { asyncRoutes, constantRoutes } from './routes.js'
 // 深拷贝
 const routes = deepClone([...constantRoutes, ...asyncRoutes])
 
+const rolelistname = ['超级管理员', '普通员工', '访客', 'test']
+
 const roles = [
   {
     key: 'admin',
@@ -63,6 +65,18 @@ export default [
       return {
         code: 20000,
         data: routes
+      }
+    }
+  },
+
+  // mock get all roleListname form server
+  {
+    url: '/rolelistname',
+    type: 'get',
+    response: _ => {
+      return {
+        code: 20000,
+        data: rolelistname
       }
     }
   },

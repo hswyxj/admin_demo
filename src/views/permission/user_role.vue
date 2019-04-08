@@ -72,7 +72,7 @@
 <script>
 // import path from 'path'
 import { deepClone } from '@/utils'
-import { getRoles, addRole, deleteRole, updateRole } from '@/api/role'
+import { getRoles, getRoleslistname, addRole, deleteRole, updateRole } from '@/api/role'
 const defaultRole = {
   key: '',
   name: '',
@@ -139,6 +139,7 @@ export default {
   },
   created() {
     this.getRoles()
+    this.getRoleslistname()
   },
   methods: {
     // async 异步函数也就意味着该函数的执行不会阻塞后面代码的执行
@@ -147,9 +148,13 @@ export default {
       // await 需要等待await后面的函数运行完并且有了返回结果之后，才继续执行下面的代码。这正是同步的效果
       const res = await getRoles()
       this.rolesList = res.data
-      this.rolelistname = res.data[0].rolelistname
-      // console.log(this.rolesList)
     },
+    async getRoleslistname() {
+      const res = await getRoleslistname()
+      this.rolelistname = res.data
+      // console.log(this.rolelistname)
+    },
+
     handleAddRole() {
       this.role = Object.assign({}, defaultRole)
       this.dialogType = 'new'

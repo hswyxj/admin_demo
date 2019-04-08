@@ -6,6 +6,12 @@ export function getRolechannels() {
     method: 'get'
   })
 }
+export function getChannellist() {
+  return request({
+    url: '/channelnameslist',
+    method: 'get'
+  })
+}
 
 export function createRolechannel(data) {
   return request({

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 列表 -->
-    <el-table :data="rolechannelList" style="width: 100%;margin-top:30px;" border>
+    <el-table :data="rolechannelLists" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="角色归属" width="220">
         <template slot-scope="{row}">{{ row.role_name }}</template>
       </el-table-column>
@@ -31,13 +31,13 @@
       <el-form ref="channel" :model="channel" :rules="rules" label-width="80px" label-position="left">
         <el-form-item label="角色归属" prop="role_name">
           <el-select v-model="channel.role_name" width="220" placeholder="角色选择" clearable>
-            <el-option v-for="item in rolechannelList" :key="item.id" :label="item.role_name" :value="item.role_name" />
+            <el-option v-for="item in rolesnamelist" :key="item.value" :label="item" :value="item" />
           </el-select>
         </el-form-item>
         <el-form-item label="渠道列表" prop="channel_name">
           <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
           <el-checkbox-group v-model="channel.channel_name" @change="handleCheckedchannelnamesChange">
-            <el-checkbox v-for="item in channel.channel_namelist" :key="item" :label="item" :value="item" name="channel_name" />
+            <el-checkbox v-for="item in channellist" :key="item.value" :label="item" :value="item" name="channel_name" />
           </el-checkbox-group>
           <!-- <el-select
             v-model="channel.channel_name"
@@ -47,7 +47,7 @@
             default-first-option
             placeholder="请选择渠道，可多选"
             clearable>
-            <el-option v-for="item in channel.channel_namelist" :key="item.id" :label="item.name" :value="item.name" name="channel_name"/>
+            <el-option v-for="item in channel.channelnamelist" :key="item.id" :label="item.name" :value="item.name" name="channel_name"/>
           </el-select> -->
         </el-form-item>
         <el-form-item label="用户描述" prop="description">
@@ -70,12 +70,12 @@
 <script>
 // import path from 'path'
 import { deepClone } from '@/utils'
-import { getRolechannels, updateRolechannels } from '@/api/channel'
+import { getRolechannels, getChannellist, updateRolechannels } from '@/api/channel'
+import { getRoleslistname } from '@/api/role'
 const defaultchannel = {
   id: '',
   role_name: '',
   channel_name: [],
-  channel_namelist: [],
   game_package_name: '',
   update_user: '',
   description: ''
@@ -85,7 +85,9 @@ export default {
     return {
       checkAll: false,
       channel: Object.assign({}, defaultchannel),
-      rolechannelList: [],
+      rolechannelLists: [],
+      channellist: [],
+      rolesnamelist: [],
       isIndeterminate: true,
       dialogVisible: false,
       dialogType: 'new',
@@ -98,6 +100,8 @@ export default {
   },
   created() {
     this.getRolechannels()
+    this.getChannellist()
+    this.getRoleslistname()
   },
   methods: {
     // async 异步函数也就意味着该函数的执行不会阻塞后面代码的执行
@@ -105,17 +109,27 @@ export default {
     async getRolechannels() {
       // await 需要等待await后面的函数运行完并且有了返回结果之后，才继续执行下面的代码。这正是同步的效果
       const res = await getRolechannels()
-      this.rolechannelList = res.data
+      this.rolechannelLists = res.data
+      // console.log(this.rolechannelList)
+    },
+    async getChannellist() {
+      const res = await getChannellist()
+      this.channellist = res.data
+      // console.log(this.channellist)
+    },
+    async getRoleslistname() {
+      const res = await getRoleslistname()
+      this.rolesnamelist = res.data
       // console.log(this.rolechannelList)
     },
     handleCheckAllChange(val) {
-      this.channel.channel_name = val ? this.channel.channel_namelist : []
+      this.channel.channel_name = val ? this.channellist : []
       this.isIndeterminate = false
     },
     handleCheckedchannelnamesChange(value) {
       const checkedCount = value.length
-      this.checkAll = checkedCount === this.channel.channel_namelist.length
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.channel.channel_namelist.length
+      this.checkAll = checkedCount === this.channellist.length
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.channellist.length
     },
     handleEdit({ row }) {
       this.dialogType = 'edit'
@@ -129,9 +143,9 @@ export default {
           if (isEdit) {
             this.channel.update_time = new Date().getTime()
             updateRolechannels(this.channel.id, this.channel)
-            for (let index = 0; index < this.rolechannelList.length; index++) {
-              if (this.rolechannelList[index].id === this.channel.id) {
-                this.rolechannelList.splice(index, 1, Object.assign({}, this.channel))
+            for (let index = 0; index < this.rolechannelLists.length; index++) {
+              if (this.rolechannelLists[index].id === this.channel.id) {
+                this.rolechannelLists.splice(index, 1, Object.assign({}, this.channel))
                 break
               }
             }
@@ -139,7 +153,7 @@ export default {
           // } else {
           //   const { data } = createRolechannel(this.channel)
           //   this.channel.id = data
-          //   this.rolechannelList.push(this.channel)
+          //   this.rolechannelLists.push(this.channel)
           // }
           const { description, role_name, channel_name, game_package_name } = this.channel
           // console.log(this.role)  // this.role 提交的角色权限数据

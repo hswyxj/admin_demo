@@ -1,11 +1,12 @@
 import Mock from 'mockjs'
 
+const channelnamelist = ['朋友玩', '泛娱', '测试', 'test1', 'test2', 'test3', 'test4', 'test5']
+
 const role_channels = [
   {
     id: '1',
     role_name: '超级管理员',
     channel_name: ['朋友玩', '泛娱', '测试'],
-    channel_namelist: ['朋友玩', '泛娱', '测试', 'test1', 'test2', 'test3', 'test4', 'test5'],
     game_package_name: 'package1',
     update_user: 'update_user1',
     timestamp: +Mock.Random.date('T'),
@@ -16,7 +17,6 @@ const role_channels = [
     id: '2',
     role_name: '普通员工',
     channel_name: ['泛娱'],
-    channel_namelist: ['朋友玩', '泛娱', '测试', 'test1', 'test2', 'test3', 'test4', 'test5'],
     game_package_name: 'package2',
     update_user: 'update_user2',
     timestamp: +Mock.Random.date('T'),
@@ -27,7 +27,6 @@ const role_channels = [
     id: '3',
     role_name: '访客',
     channel_name: ['测试'],
-    channel_namelist: ['朋友玩', '泛娱', '测试', 'test1', 'test2', 'test3', 'test4', 'test5'],
     game_package_name: 'package3',
     update_user: 'update_user3',
     timestamp: +Mock.Random.date('T'),
@@ -45,6 +44,17 @@ export default [
       return {
         code: 20000,
         data: role_channels
+      }
+    }
+  },
+  // get
+  {
+    url: '/channelnameslist',
+    type: 'get',
+    response: _ => {
+      return {
+        code: 20000,
+        data: channelnamelist
       }
     }
   },
