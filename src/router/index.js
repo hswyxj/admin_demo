@@ -44,7 +44,7 @@ export const constantRoutes = [
     children: [
       {
         path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
+        component: () => import('@/views/redirect/index') // 懒加载
       }
     ]
   },

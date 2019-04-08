@@ -1,11 +1,11 @@
 /**
- * Created by jiachenpan on 16/11/18.
+ * Created by heshiwen on 20190401.
  */
 
-export function validUsername(str) {
-  const valid_map = ['admin', 'editor', 'editor1']
-  return valid_map.indexOf(str.trim()) >= 0
-}
+// export function validUsername(str) {
+//   const valid_map = ['admin', 'editor', 'editor1']
+//   return valid_map.indexOf(str.trim()) >= 0
+// }
 
 // export function validPassword(str) {
 //   const valid_map = ['adminpwd', 'editorpwd']

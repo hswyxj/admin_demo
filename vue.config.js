@@ -31,7 +31,6 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    disableHostCheck: false, // 热更新
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy

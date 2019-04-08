@@ -85,6 +85,18 @@ const defaultRole = {
 export default {
   data() {
     // 自定义验证规则
+    var validateUser = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('请输入用户账号'))
+      }
+      setTimeout(() => {
+        if (value.length < 6) {
+          callback(new Error('用户账号必须大于6位'))
+        } else {
+          callback()
+        }
+      }, 1000)
+    }
     var checkIphonenum = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('请输入用户手机号码'))
@@ -116,7 +128,7 @@ export default {
       checkStrictly: false,
       rules: {
         name: [{ required: true, message: '请选择角色组', trigger: 'change' }],
-        username: [{ required: true, message: '请输入用户名称', trigger: 'blur' }],
+        username: [{ validator: validateUser, required: true, trigger: 'blur' }],
         password: [{ validator: validatePass, required: true, trigger: 'blur' }],
         // iphonenum: [{ type: 'number', required: true, message: '请输入用户手机号码', trigger: 'blur' }],
         iphonenum: [{ validator: checkIphonenum, required: true, trigger: 'blur' },

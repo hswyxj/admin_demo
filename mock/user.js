@@ -35,17 +35,16 @@ export default [
       const { password } = config.body
       const token = tokens[username]
 
-      console.log(token)
       // mock error
       if (!token) {
         return {
           code: 60204,
-          message: '帐户和密码不正确2。'
+          message: '帐户或密码不正确2。'
         }
       } else if (password !== users[token.token].password) {
         return {
           code: 60204,
-          message: '帐户和密码不正确。'
+          message: '帐户或密码不正确。'
         }
       }
 
