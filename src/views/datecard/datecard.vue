@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="item">
       <h4>卡片的展示</h4>
-      <DataCard :option="easyDataOption0"/>
+      <DataCard :option="easyDataOption0" />
     </div>
   </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
   <div class="DataCard">
     <el-row :span="24">
-      <el-col v-for="(item,index) in data" :span="span" :key="index">
+      <el-col v-for="(item,index) in data" :key="index" :span="span">
         <div class="item">
-          <img :src="item.src" class="item-img" >
+          <img :src="item.src" class="item-img">
           <div :style="{color:colorText,backgroundColor:bgText}" class="item-text">
             <h3>{{ item.name }}</h3>
             <p>{{ item.text }}</p>
