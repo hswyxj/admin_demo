@@ -1,12 +1,78 @@
 import Mock from 'mockjs'
 
-const channelnamelist = ['朋友玩', '泛娱', '测试', 'test1', 'test2', 'test3', 'test4', 'test5']
+const channelnamelist = [
+  {
+    id: 1,
+    name: '朋友玩',
+    children: [
+      {
+        id: 11,
+        name: '朋友玩-1'
+      },
+      {
+        id: 12,
+        name: '朋友玩-2'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: '泛娱'
+  },
+  {
+    id: 3,
+    name: '测试'
+  },
+  {
+    id: 4,
+    name: 'test1'
+  },
+  {
+    id: 5,
+    name: 'test2'
+  },
+  {
+    id: 6,
+    name: 'test3'
+  },
+  {
+    id: 7,
+    name: 'test4'
+  },
+  {
+    id: 8,
+    name: 'test5'
+  }
+]
 
 const role_channels = [
   {
     id: '1',
     role_name: '超级管理员',
-    channel_name: ['朋友玩', '泛娱', '测试'],
+    channel_name: [
+      {
+        id: 1,
+        name: '朋友玩',
+        children: [
+          {
+            id: 11,
+            name: '朋友玩-1'
+          },
+          {
+            id: 12,
+            name: '朋友玩-2'
+          }
+        ]
+      },
+      {
+        id: 2,
+        name: '泛娱'
+      },
+      {
+        id: 3,
+        name: '测试'
+      }
+    ],
     game_package_name: 'package1',
     update_user: 'update_user1',
     timestamp: +Mock.Random.date('T'),
@@ -16,7 +82,12 @@ const role_channels = [
   {
     id: '2',
     role_name: '普通员工',
-    channel_name: ['泛娱'],
+    channel_name: [
+      {
+        id: 2,
+        name: '泛娱'
+      }
+    ],
     game_package_name: 'package2',
     update_user: 'update_user2',
     timestamp: +Mock.Random.date('T'),
@@ -26,7 +97,12 @@ const role_channels = [
   {
     id: '3',
     role_name: '访客',
-    channel_name: ['测试'],
+    channel_name: [
+      {
+        id: 3,
+        name: '测试'
+      }
+    ],
     game_package_name: 'package3',
     update_user: 'update_user3',
     timestamp: +Mock.Random.date('T'),

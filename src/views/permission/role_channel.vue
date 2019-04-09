@@ -7,7 +7,7 @@
       </el-table-column>
       <el-table-column align="center" label="渠道列表">
         <template slot-scope="{row}">
-          <el-tag v-for="item in row.channel_name" :key="item" :label="item" :value="item">{{ item }}</el-tag>
+          <el-tag v-for="item in row.channel_name" :key="item.id" :label="item.name" :value="item.name">{{ item.name }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="header-center" label="描述">
@@ -35,20 +35,18 @@
           </el-select>
         </el-form-item>
         <el-form-item label="渠道列表" prop="channel_name">
-          <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
-          <el-checkbox-group v-model="channel.channel_name" @change="handleCheckedchannelnamesChange">
-            <el-checkbox v-for="item in channellist" :key="item.value" :label="item" :value="item" name="channel_name" />
-          </el-checkbox-group>
-          <!-- <el-select
+          <el-tree
+            ref="tree"
             v-model="channel.channel_name"
-            multiple
-            filterable
-            allow-create
-            default-first-option
-            placeholder="请选择渠道，可多选"
-            clearable>
-            <el-option v-for="item in channel.channelnamelist" :key="item.id" :label="item.name" :value="item.name" name="channel_name"/>
-          </el-select> -->
+            :check-strictly="checkStrictly"
+            :data="routesData"
+            :props="defaultProps"
+            show-checkbox
+            node-key="id"
+            default-expand-all
+            highlight-current
+            class="permission-tree"
+          />
         </el-form-item>
         <el-form-item label="用户描述" prop="description">
           <el-input
@@ -61,7 +59,7 @@
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="confirmRole('channel')">确认</el-button>
+        <el-button type="primary" @click="confirmRole('channel') || getCheckedNodes()">确认</el-button>
       </div>
     </el-dialog>
   </div>
@@ -91,11 +89,20 @@ export default {
       isIndeterminate: true,
       dialogVisible: false,
       dialogType: 'new',
-      checkStrictly: false,
       rules: {
         role_name: [{ required: true, message: '请选择角色组', trigger: 'change' }],
         channel_name: [{ type: 'array', required: true, message: '请至少选择一个渠道', trigger: 'change' }]
+      },
+      checkStrictly: false,
+      defaultProps: {
+        children: 'children',
+        label: 'name'
       }
+    }
+  },
+  computed: {
+    routesData() {
+      return this.channellist
     }
   },
   created() {
@@ -110,7 +117,7 @@ export default {
       // await 需要等待await后面的函数运行完并且有了返回结果之后，才继续执行下面的代码。这正是同步的效果
       const res = await getRolechannels()
       this.rolechannelLists = res.data
-      // console.log(this.rolechannelList)
+      // console.log(this.rolechannelLists)
     },
     async getChannellist() {
       const res = await getChannellist()
@@ -120,28 +127,26 @@ export default {
     async getRoleslistname() {
       const res = await getRoleslistname()
       this.rolesnamelist = res.data
-      // console.log(this.rolechannelList)
-    },
-    handleCheckAllChange(val) {
-      this.channel.channel_name = val ? this.channellist : []
-      this.isIndeterminate = false
-    },
-    handleCheckedchannelnamesChange(value) {
-      const checkedCount = value.length
-      this.checkAll = checkedCount === this.channellist.length
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.channellist.length
+      // console.log(this.rolesnamelist)
     },
     handleEdit({ row }) {
       this.dialogType = 'edit'
       this.dialogVisible = true
+      this.checkStrictly = true
       this.channel = deepClone(row)
+      this.$nextTick(() => {
+        // set checked state of a node not affects its father and child nodes
+        this.checkStrictly = false
+        this.$refs.tree.setCheckedNodes(row.channel_name) // 通过 node 设置
+      })
     },
     async confirmRole(channel) {
       this.$refs[channel].validate((valid) => {
         const isEdit = this.dialogType === 'edit'
         if (valid) {
+          this.channel.update_time = new Date().getTime()
+          this.channel.channel_name = this.$refs.tree.getCheckedNodes() // 返回目前被选中的节点所组成的数组
           if (isEdit) {
-            this.channel.update_time = new Date().getTime()
             updateRolechannels(this.channel.id, this.channel)
             for (let index = 0; index < this.rolechannelLists.length; index++) {
               if (this.rolechannelLists[index].id === this.channel.id) {
@@ -155,15 +160,14 @@ export default {
           //   this.channel.id = data
           //   this.rolechannelLists.push(this.channel)
           // }
-          const { description, role_name, channel_name, game_package_name } = this.channel
-          // console.log(this.role)  // this.role 提交的角色权限数据
+          const { description, role_name, game_package_name } = this.channel
+          // console.log(this.channel) // this.role 提交的角色权限数据
           this.dialogVisible = false
           this.$notify({
             title: '成功',
             dangerouslyUseHTMLString: true,
             message: `
             <div>角色归属: ${role_name}</div>
-            <div>渠道名称: ${channel_name}</div>
             <div>包体名称: ${game_package_name}</div>
             <div>描述: ${description}</div>
           `,
