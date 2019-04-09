@@ -52,9 +52,28 @@ export default [
         code: 20000,
         data: {
           total: mockList.length,
-          items: pageList,
-          mockList: mockList
+          items: pageList
         }
+      }
+    }
+  },
+  {
+    url: '/article/downloaddata',
+    type: 'get',
+    response: config => {
+      // 对于复合类型的变量，变量名不指向数据，而是指向数据所在的地址。const命令只是保证变量名指向的地址不变，并不保证该地址的数据不变
+      const { importance, status, title } = config.query
+
+      const mockList = List.filter(item => {
+        if (importance && item.importance !== +importance) return false
+        if (status && item.status !== status) return false
+        if (title && item.title.indexOf(title) < 0) return false
+        return true
+      })
+
+      return {
+        code: 20000,
+        data: mockList
       }
     }
   },

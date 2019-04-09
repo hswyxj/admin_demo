@@ -7,6 +7,13 @@ export function fetchList(query) {
     params: query
   })
 }
+export function DownloaddataList(query) {
+  return request({
+    url: '/article/downloaddata',
+    method: 'get',
+    params: query
+  })
+}
 
 export function fetchArticle(id) {
   return request({

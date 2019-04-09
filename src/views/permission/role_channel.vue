@@ -37,7 +37,6 @@
         <el-form-item label="渠道列表" prop="channel_name">
           <el-tree
             ref="tree"
-            v-model="channel.channel_name"
             :check-strictly="checkStrictly"
             :data="routesData"
             :props="defaultProps"

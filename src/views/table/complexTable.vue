@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle, batchremoveArticle } from '@/api/article' // @ 等价于 /src 这个目录，避免写麻烦又易错的相对路径
+import { fetchList, DownloaddataList, fetchPv, createArticle, updateArticle, batchremoveArticle } from '@/api/article' // @ 等价于 /src 这个目录，避免写麻烦又易错的相对路径
 import waves from '@/directive/waves' // Waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -242,8 +242,6 @@ export default {
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
-        this.mockLists = response.data.mockList // 导出所有数据源
-        // console.log(response.data.items)
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -432,15 +430,21 @@ export default {
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = ['时间', '标题', '作者', '审核人', '重要性', '状态']
         const filterVal = ['timestamp', 'title', 'author', 'reviewer', 'importance', 'status']
-        const data = this.formatJson(filterVal, this.mockLists)
-        excel.export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: nowtimes + 'excel模板'
+        this.listLoading = true
+        DownloaddataList(this.listQuery).then(response => {
+          this.mockLists = response.data // 导出所有数据源
+          const data = this.formatJson(filterVal, this.mockLists)
+          excel.export_json_to_excel({
+            header: tHeader,
+            data,
+            filename: nowtimes + 'excel模板'
+          })
         })
         this.downloadLoading = false
+        this.listLoading = false
       })
     },
+
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
         if (j === 'timestamp') {
