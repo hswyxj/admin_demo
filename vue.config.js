@@ -18,20 +18,20 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: './',
-  outputDir: 'docs',
+  publicPath: './', // 默认'/'，部署应用包时的基本 URL
+  outputDir: 'docs', // 'dist', 生产环境构建文件的目录
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
-  productionSourceMap: false,
+  productionSourceMap: false, // 生产环境的 source map
 
   devServer: {
+    hot: true,
     port: port,
     open: false,
     overlay: {
       warnings: false,
       errors: true
     },
-    disableHostCheck: false, // 热更新
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy

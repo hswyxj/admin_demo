@@ -62,14 +62,18 @@ export default [
     type: 'get',
     response: config => {
       // 对于复合类型的变量，变量名不指向数据，而是指向数据所在的地址。const命令只是保证变量名指向的地址不变，并不保证该地址的数据不变
-      const { importance, status, title } = config.query
+      const { importance, status, title, sort } = config.query
 
-      const mockList = List.filter(item => {
+      let mockList = List.filter(item => {
         if (importance && item.importance !== +importance) return false
         if (status && item.status !== status) return false
         if (title && item.title.indexOf(title) < 0) return false
         return true
       })
+
+      if (sort === '-id') {
+        mockList = mockList.reverse()
+      }
 
       return {
         code: 20000,

@@ -92,9 +92,10 @@ npm run lint -- --fix
 
 
 # 移除mock 用实际接口
- - 部分mock部分实际接口，只要把mock/index.js对应接口拦截地址注释即可。
+ - 部分mock部分实际接口，只要把mock/api.js对应接口拦截接口注释即可。
+ 例如：
 
- - 如果要全部移除mock数据，只需要在 @/src/main.js 中移除 import './mock' 并且删除 @/src/mock 文件夹即可。
+ - 如果要全部移除mock数据，只需要在 @/src/main.js 中移除 import { mockXHR } from '../mock' 并且删除mock目录下的文件。
 
 
 
