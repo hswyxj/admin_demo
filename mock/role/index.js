@@ -11,7 +11,6 @@ const roles = [
   {
     key: 'admin',
     name: '超级管理员',
-    rolelistname: ['超级管理员', '普通员工', '访客', 'test'],
     username: 'admin_user',
     password: 'admin_password',
     iphonenum: 13111111111,
@@ -23,7 +22,6 @@ const roles = [
   {
     key: 'editor',
     name: '普通员工',
-    rolelistname: ['超级管理员', '普通员工', '访客', 'test'],
     username: 'editor_user',
     password: 'editor_password',
     iphonenum: 13111111112,
@@ -35,7 +33,6 @@ const roles = [
   {
     key: 'visitor',
     name: '访客',
-    rolelistname: ['超级管理员', '普通员工', '访客', 'test'],
     username: 'visitor_user',
     password: 'visitor_password',
     iphonenum: 13111111113,

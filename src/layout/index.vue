@@ -10,16 +10,16 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import { AppMain, Navbar, Sidebar } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
 export default {
   name: 'Layout',
   components: {
+    AppMain,
     Navbar,
-    Sidebar,
-    AppMain
+    Sidebar
   },
   mixins: [ResizeMixin],
   computed: {

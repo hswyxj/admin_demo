@@ -7,7 +7,7 @@
     <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg" alt="vue">
   </a>
   <a href="https://github.com/ElemeFE/element">
-    <img src="https://img.shields.io/badge/element--ui-2.7.0-brightgreen.svg" alt="element-ui">
+    <img src="https://img.shields.io/badge/element--ui-2.7.2-brightgreen.svg" alt="element-ui">
   </a>
   <a href="https://github.com/hswyxj/admin_demo/master/LICENSE">
     <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license">
@@ -27,7 +27,7 @@
 </p>
 
 ## 简介
-该项目是vue-cli@3构建的 4.0-beta 版本，由基础模板[vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)升级集成而得，主要根据作者[PanJiaChen](https://github.com/PanJiaChen/) 基础模板和集成方案 :
+该项目是vue-cli@3构建的 v4.0+ 版本，由[PanJiaChen](https://github.com/PanJiaChen/)的基础模板[vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)二次开发而得，主要根据作者[PanJiaChen](https://github.com/PanJiaChen/) 集成方案 :
 
 基础模板: [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)
 
