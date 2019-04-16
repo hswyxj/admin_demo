@@ -11,7 +11,7 @@ import { asyncRoutes, constantRoutes } from '@/router'
  */
 function hasPermission(roles, route) {
   // 如果是隐藏的菜单, 都是可访问的, 因为隐藏的菜单不会出现在左侧菜单栏, 不可编辑权限
-  if (route.hidden) return true
+  // if (route.hidden) return true
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
   } else {
@@ -47,13 +47,13 @@ export function filterAsyncRoutes(routes, roles) {
       res.push(tmp)
     }
   })
+  console.log(res)
   return res
 }
 
 const state = {
   routes: [],
   addRoutes: []
-  // asyncRoutes: []
 }
 
 const mutations = {
@@ -63,6 +63,24 @@ const mutations = {
   }
 }
 
+// const actions = {
+//   generateRoutes({ commit }, roles) {
+//     return new Promise(resolve => {
+//       let accessedRoutes
+//       getRoutes().then(res => {
+//         const asyncRoutes = res.data
+//         if (roles.includes('admin')) {
+//           accessedRoutes = mapAsyncRoutes(asyncRoutes).concat(generalRoutes)
+//         } else {
+//           accessedRoutes = mapAsyncRoutes(filterAsyncRoutes(asyncRoutes, roles)).concat(generalRoutes)
+//         }
+//         commit('SET_ROUTES', accessedRoutes)
+//         resolve(accessedRoutes)
+//         console.log(accessedRoutes)
+//       })
+//     })
+//   }
+// }
 const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
@@ -77,25 +95,6 @@ const actions = {
     })
   }
 }
-
-// 服务端返回菜单
-// const actions = {
-//   generateRoutes({ commit }, roles) {
-//     return new Promise(resolve => {
-//       let accessedRoutes
-//       getRoutes().then(res => {
-//         const asyncRoutes = res.data
-//         if (roles.includes('admin')) {
-//           accessedRoutes = mapAsyncRoutes(asyncRoutes).concat(generalRoutes)
-//         } else {
-//           accessedRoutes = mapAsyncRoutes(filterAsyncRoutes(asyncRoutes, roles)).concat(generalRoutes)
-//         }
-//         commit('SET_ROUTES', accessedRoutes)
-//         resolve(accessedRoutes)
-//       })
-//     })
-//   }
-// }
 
 export default {
   namespaced: true,

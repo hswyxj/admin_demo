@@ -51,6 +51,7 @@ export const asyncRoutes = [
   {
     path: '/datecard',
     component: 'layout/index',
+    hidden: true,
     children: [
       {
         path: 'index',
