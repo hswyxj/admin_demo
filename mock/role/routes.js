@@ -2,45 +2,14 @@
 
 export const constantRoutes = [
   {
-    path: '/redirect',
-    component: 'layout/Layout',
-    hidden: true,
+    path: 'dashboard',
+    component: 'layout/index',
+    redirect: 'dashboard/index',
     children: [
       {
-        path: '/redirect/:path*',
-        component: 'views/redirect/index'
-      }
-    ]
-  },
-  {
-    path: '/login',
-    component: 'views/login/index',
-    hidden: true
-  },
-  {
-    path: '/auth-redirect',
-    component: 'views/login/authredirect',
-    hidden: true
-  },
-  {
-    path: '/404',
-    component: '/views/errorPage/404',
-    hidden: true
-  },
-  {
-    path: '/401',
-    component: 'views/errorPage/401',
-    hidden: true
-  },
-  {
-    path: '',
-    component: 'layout/Layout',
-    redirect: 'dashboard',
-    children: [
-      {
-        path: 'dashboard',
+        path: 'index',
         component: 'views/dashboard/index',
-        name: 'Dashboard',
+        name: '首页',
         meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
       }
     ]
@@ -51,7 +20,7 @@ export const asyncRoutes = [
   {
     path: '/datecard',
     component: 'layout/index',
-    hidden: true,
+    hidden: false, // hidden为true菜单侧边栏不展示该菜单，默认为false展示
     children: [
       {
         path: 'index',
@@ -66,6 +35,7 @@ export const asyncRoutes = [
     component: 'layout/index',
     redirect: 'menu1/menu1-1',
     name: 'Nested',
+    hidden: false,
     meta: {
       title: '多级菜单',
       icon: 'list'
@@ -75,6 +45,7 @@ export const asyncRoutes = [
         path: 'menu1',
         component: 'nested/menu1/index', // Parent router-view
         name: 'Menu1',
+        hidden: false,
         meta: { title: 'menu1' },
         redirect: '/nested/menu1/menu1-1',
         children: [
@@ -82,12 +53,14 @@ export const asyncRoutes = [
             path: 'menu1-1',
             component: 'nested/menu1/menu1-1',
             name: 'Menu1-1',
+            hidden: false,
             meta: { title: 'menu1-1' }
           },
           {
             path: 'menu1-2',
             component: 'nested/menu1/menu1-2',
             name: 'Menu1-2',
+            hidden: false,
             redirect: '/nested/menu1/menu1-2/menu1-2-1',
             meta: { title: 'menu1-2' },
             children: [
@@ -95,12 +68,14 @@ export const asyncRoutes = [
                 path: 'menu1-2-1',
                 component: 'nested/menu1/menu1-2/menu1-2-1',
                 name: 'Menu1-2-1',
+                hidden: false,
                 meta: { title: 'menu1-2-1' }
               },
               {
                 path: 'menu1-2-2',
                 component: 'nested/menu1/menu1-2/menu1-2-2',
                 name: 'Menu1-2-2',
+                hidden: false,
                 meta: { title: 'menu1-2-2' }
               }
             ]
@@ -109,6 +84,7 @@ export const asyncRoutes = [
             path: 'menu1-3',
             component: 'menu1/menu1-3',
             name: 'Menu1-3',
+            hidden: false,
             meta: { title: 'menu1-3' }
           }
         ]
@@ -116,6 +92,7 @@ export const asyncRoutes = [
       {
         path: 'menu2',
         name: 'Menu2',
+        hidden: false,
         component: 'nested/menu2/index',
         meta: { title: 'menu2' }
       }
@@ -126,23 +103,27 @@ export const asyncRoutes = [
     component: 'layout/index',
     redirect: '/example/table',
     name: 'Example',
+    hidden: false,
     meta: { title: '模板例子', icon: 'list' },
     children: [
       {
         path: 'table',
         name: 'Table',
+        hidden: false,
         component: 'table/inlineEditTable',
         meta: { title: '表内编辑' }
       },
       {
         path: 'tree',
         name: 'Tree',
+        hidden: false,
         component: 'tree/index',
         meta: { title: '树形模板' }
       },
       {
         path: 'complex-table',
         name: 'complexTable',
+        hidden: false,
         component: 'table/complexTable',
         meta: { title: '综合模板' }
       }
@@ -155,6 +136,7 @@ export const asyncRoutes = [
       {
         path: 'index',
         name: 'Form',
+        hidden: false,
         component: 'form/index',
         meta: { title: '提交模板', icon: 'list' }
       }
@@ -162,8 +144,9 @@ export const asyncRoutes = [
   },
   {
     path: '/permission',
-    component: 'layout/index',
+    component: '../layout/index',
     redirect: 'permission/index',
+    hidden: true,
     meta: {
       title: '权限管理',
       icon: 'list',
@@ -174,27 +157,30 @@ export const asyncRoutes = [
         path: 'role',
         component: 'permission/role',
         name: 'RolePermission',
+        hidden: false,
         meta: {
           title: '角色管理',
           roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
-        path: 'role_channel',
-        component: 'permission/role_channel',
-        name: 'UserchannelPermission',
+        path: 'user_role',
+        component: 'permission/user_role',
+        name: 'UserRolePermission',
+        hidden: false,
         meta: {
-          title: '渠道权限',
-          // if do not set roles, means: this page does not require permission
+          title: '用户管理',
           roles: ['admin']
         }
       },
       {
-        path: 'user_role',
-        component: 'permission/user_role',
-        name: 'UserRolePermission',
+        path: 'role_channel',
+        component: 'permission/role_channel',
+        name: 'UserchannelPermission',
+        hidden: false,
         meta: {
-          title: '用户管理',
+          title: '渠道权限',
+          // if do not set roles, means: this page does not require permission
           roles: ['admin']
         }
       }

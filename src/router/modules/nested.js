@@ -1,6 +1,6 @@
 /** When your routing table is too long, you can split it into small modules**/
 
-import Layout from '@/layout'
+import Layout from '@/views/layout/index'
 
 const nestedRouter = {
   path: '/nested',
@@ -16,6 +16,7 @@ const nestedRouter = {
       path: 'menu1',
       component: () => import('@/views/nested/menu1/index'), // Parent router-view
       name: 'Menu1',
+      hidden: false,
       meta: { title: 'menu1' },
       redirect: '/nested/menu1/menu1-1',
       children: [
@@ -23,12 +24,14 @@ const nestedRouter = {
           path: 'menu1-1',
           component: () => import('@/views/nested/menu1/menu1-1'),
           name: 'Menu1-1',
+          hidden: false,
           meta: { title: 'menu1-1' }
         },
         {
           path: 'menu1-2',
           component: () => import('@/views/nested/menu1/menu1-2'),
           name: 'Menu1-2',
+          hidden: false,
           redirect: '/nested/menu1/menu1-2/menu1-2-1',
           meta: { title: 'menu1-2' },
           children: [
@@ -36,12 +39,14 @@ const nestedRouter = {
               path: 'menu1-2-1',
               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
               name: 'Menu1-2-1',
+              hidden: false,
               meta: { title: 'menu1-2-1' }
             },
             {
               path: 'menu1-2-2',
               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
               name: 'Menu1-2-2',
+              hidden: false,
               meta: { title: 'menu1-2-2' }
             }
           ]
@@ -50,6 +55,7 @@ const nestedRouter = {
           path: 'menu1-3',
           component: () => import('@/views/nested/menu1/menu1-3'),
           name: 'Menu1-3',
+          hidden: false,
           meta: { title: 'menu1-3' }
         }
       ]
@@ -57,6 +63,7 @@ const nestedRouter = {
     {
       path: 'menu2',
       name: 'Menu2',
+      hidden: false,
       component: () => import('@/views/nested/menu2/index'),
       meta: { title: 'menu2' }
     }

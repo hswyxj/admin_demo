@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from '@/views/layout/index'
 
 /* Router Modules */
 import tableRouter from './modules/table'
@@ -71,10 +71,11 @@ export const constantRoutes = [
   {
     path: '',
     component: Layout,
-    redirect: 'dashboard',
+    redirect: 'dashboard/index',
+    hidden: true,
     children: [
       {
-        path: 'dashboard',
+        path: 'dashboard/index',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
         meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
@@ -103,6 +104,7 @@ export const asyncRoutes = [
   {
     path: '/form',
     component: Layout,
+    hidden: false,
     children: [
       {
         path: 'index',
@@ -117,6 +119,7 @@ export const asyncRoutes = [
     path: '/permission',
     component: Layout,
     redirect: '/permission/index',
+    hidden: false,
     alwaysShow: true, // will always show the root menu
     meta: {
       title: '权限管理',
@@ -128,27 +131,30 @@ export const asyncRoutes = [
         path: 'role',
         component: () => import('@/views/permission/role'),
         name: 'RolePermission',
+        hidden: false,
         meta: {
           title: '角色管理',
           roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
-        path: 'role_channel',
-        component: () => import('@/views/permission/role_channel'),
-        name: 'UserchannelPermission',
+        path: 'user_role',
+        component: () => import('@/views/permission/user_role'),
+        name: 'UserRolePermission',
+        hidden: false,
         meta: {
-          title: '渠道权限',
-          // if do not set roles, means: this page does not require permission
+          title: '用户管理',
           roles: ['admin']
         }
       },
       {
-        path: 'user_role',
-        component: () => import('@/views/permission/user_role'),
-        name: 'UserRolePermission',
+        path: 'role_channel',
+        component: () => import('@/views/permission/role_channel'),
+        name: 'UserchannelPermission',
+        hidden: false,
         meta: {
-          title: '用户管理',
+          title: '渠道权限',
+          // if do not set roles, means: this page does not require permission
           roles: ['admin']
         }
       }
