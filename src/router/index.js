@@ -7,8 +7,8 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-// import tableRouter from './modules/table'
-// import nestedRouter from './modules/nested'
+import tableRouter from './modules/table'
+import nestedRouter from './modules/nested'
 
 /**
 * Note: sub-menu only appear when route children.length >= 1
@@ -81,6 +81,81 @@ export const constantRoutes = [
       }
     ]
   }
+]
+
+export const asyncRoutes = [
+  {
+    path: '/datecard',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        name: 'datecard',
+        component: () => import('@/views/datecard/datecard'),
+        meta: { title: '卡片展示', icon: 'list' }
+      }
+    ]
+  },
+  /** when your routing map is too long, you can split it into small modules **/
+  nestedRouter,
+  tableRouter,
+  {
+    path: '/form',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/form/index'),
+        meta: { title: '提交模板', icon: 'list' }
+      }
+    ]
+  },
+
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/index',
+    alwaysShow: true, // will always show the root menu
+    meta: {
+      title: '权限管理',
+      icon: 'list',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'role',
+        component: () => import('@/views/permission/role'),
+        name: 'RolePermission',
+        meta: {
+          title: '角色管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'role_channel',
+        component: () => import('@/views/permission/role_channel'),
+        name: 'UserchannelPermission',
+        meta: {
+          title: '渠道权限',
+          // if do not set roles, means: this page does not require permission
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'user_role',
+        component: () => import('@/views/permission/user_role'),
+        name: 'UserRolePermission',
+        meta: {
+          title: '用户管理',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
+
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 // 权限菜单后端返回
