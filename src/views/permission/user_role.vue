@@ -25,8 +25,8 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="{row}">
-          <el-button type="primary" size="small" @click="handleEdit({row})">编辑修改</el-button>
-          <el-button type="danger" size="small" @click="handleDelete({row})">删除</el-button>
+          <el-button v-if="checkPermission(['admin'])" type="primary" size="small" @click="handleEdit({row})">编辑修改</el-button>
+          <el-button v-if="checkPermission(['admin'])" type="danger" size="small" @click="handleDelete({row})">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -73,6 +73,8 @@
 // import path from 'path'
 import { deepClone } from '@/utils'
 import { getRoles, getRoleslistname, addRole, deleteRole, updateRole } from '@/api/role'
+import checkPermission from '@/utils/permission' // 权限判断函数
+
 const defaultRole = {
   key: '',
   name: '',
@@ -80,7 +82,8 @@ const defaultRole = {
   password: '',
   email: '',
   update_time: '',
-  description: ''
+  description: '',
+  btnpermission: ''
 }
 export default {
   data() {
@@ -131,6 +134,7 @@ export default {
     this.getRoleslistname()
   },
   methods: {
+    checkPermission,
     // async 异步函数也就意味着该函数的执行不会阻塞后面代码的执行
     // 需要注意：await必须放在async中
     async getRoles() {

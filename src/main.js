@@ -21,6 +21,7 @@ import * as filters from './filters' // global filters
 import { mockXHR } from '../mock' // simulation data
 
 // mock api in github pages site build
+// production
 if (process.env.NODE_ENV === 'production') { mockXHR() }
 
 Vue.use(Element, {

@@ -130,7 +130,7 @@ export default {
         this.capsTooltip = false
       }
     },
-    handleLogin() {
+    handleLogin(val) {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true

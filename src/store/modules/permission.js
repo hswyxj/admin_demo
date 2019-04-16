@@ -1,4 +1,8 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+// import { asyncRoutes, constantRoutes } from '@/router'
+import { constantRoutes, generalRoutes } from '@/router'
+import { getRoutes } from '@/api/role'
+
+const _import = path => () => import(`@/views/${path}`)
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -6,11 +10,24 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param route
  */
 function hasPermission(roles, route) {
+  // 如果是隐藏的菜单, 都是可访问的, 因为隐藏的菜单不会出现在左侧菜单栏, 不可编辑权限
+  if (route.hidden) return true
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
   } else {
     return true
   }
+}
+
+// 将从服务器获得的路由表转换为vue - router的路由表
+function mapAsyncRoutes(asyncRoutes) {
+  return asyncRoutes.map(route => {
+    route.component && (route.component = _import(route.component))
+    if (route.children) {
+      route.children = mapAsyncRoutes(route.children)
+    }
+    return route
+  })
 }
 
 /**
@@ -30,13 +47,14 @@ export function filterAsyncRoutes(routes, roles) {
       res.push(tmp)
     }
   })
-
+  console.log(res)
   return res
 }
 
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
+  asyncRoutes: []
 }
 
 const mutations = {
@@ -50,13 +68,16 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      getRoutes().then(res => {
+        const asyncRoutes = res.data
+        if (roles.includes('admin')) {
+          accessedRoutes = mapAsyncRoutes(asyncRoutes).concat(generalRoutes)
+        } else {
+          accessedRoutes = mapAsyncRoutes(filterAsyncRoutes(asyncRoutes, roles)).concat(generalRoutes)
+        }
+        commit('SET_ROUTES', accessedRoutes)
+        resolve(accessedRoutes)
+      })
     })
   }
 }

@@ -28,7 +28,7 @@ const roles = [
     email: 'editor_user@yyft.com',
     description: '普通员工。可以看到除权限页之外的所有页。',
     update_time: +Mock.Random.date('T'),
-    routes: routes.filter(i => i.path !== '/permission')// just a mock
+    routes: routes.filter(i => i.path !== '/permission') // just a mock
   },
   {
     key: 'visitor',

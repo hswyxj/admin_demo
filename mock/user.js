@@ -5,6 +5,9 @@ const tokens = {
   },
   editor: {
     token: 'editor-token'
+  },
+  visitor: {
+    token: 'visitor-token'
   }
 }
 
@@ -22,7 +25,15 @@ const users = {
     introduction: '普通员工',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'editor'
+  },
+  'visitor-token': {
+    roles: ['visitor'],
+    password: 'visitor_password',
+    introduction: '访客',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'visitor'
   }
+
 }
 
 export default [

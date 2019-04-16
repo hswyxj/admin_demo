@@ -20,7 +20,7 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="{row}">
-          <el-button type="primary" size="small" @click="handleEdit({row})">编辑修改</el-button>
+          <el-button v-if="checkPermission(['admin'])" type="primary" size="small" @click="handleEdit({row})">编辑修改</el-button>
           <!-- <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button> -->
         </template>
       </el-table-column>
@@ -69,6 +69,8 @@
 import { deepClone } from '@/utils'
 import { getRolechannels, getChannellist, updateRolechannels } from '@/api/channel'
 import { getRoleslistname } from '@/api/role'
+import checkPermission from '@/utils/permission' // 权限判断函数
+
 const defaultchannel = {
   id: '',
   role_name: '',
@@ -110,6 +112,8 @@ export default {
     this.getRoleslistname()
   },
   methods: {
+    checkPermission,
+
     // async 异步函数也就意味着该函数的执行不会阻塞后面代码的执行
     // 需要注意：await必须放在async中
     async getRolechannels() {

@@ -19,7 +19,7 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="{row}">
-          <el-button type="primary" size="small" @click="handleEdit({row})">编辑修改</el-button>
+          <el-button v-if="checkPermission(['admin'])" type="primary" size="small" @click="handleEdit({row})">编辑修改</el-button>
           <!-- <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button> -->
         </template>
       </el-table-column>
@@ -56,6 +56,8 @@
 import path from 'path'
 import { deepClone } from '@/utils'
 import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
+import checkPermission from '@/utils/permission' // 权限判断函数
+
 const defaultRole = {
   key: '',
   name: '',
@@ -89,6 +91,7 @@ export default {
     this.getRoles()
   },
   methods: {
+    checkPermission,
     async getRoutes() {
       const res = await getRoutes()
       this.serviceRoutes = res.data
