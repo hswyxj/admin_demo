@@ -146,7 +146,7 @@ export const asyncRoutes = [
     path: '/permission',
     component: '../layout/index',
     redirect: 'permission/index',
-    hidden: true,
+    hidden: false,
     meta: {
       title: '权限管理',
       icon: 'list',
