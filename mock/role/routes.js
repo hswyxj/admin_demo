@@ -99,9 +99,9 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/example',
+    path: '/table',
     component: 'layout/index',
-    redirect: '/example/table',
+    redirect: '/table/index',
     name: 'Example',
     hidden: false,
     meta: { title: '模板例子', icon: 'list' },
@@ -144,7 +144,7 @@ export const asyncRoutes = [
   },
   {
     path: '/permission',
-    component: '../layout/index',
+    component: 'layout/index',
     redirect: 'permission/index',
     hidden: false,
     meta: {
