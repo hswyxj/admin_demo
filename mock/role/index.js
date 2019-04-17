@@ -28,7 +28,7 @@ const roles = [
     email: 'editor_user@yyft.com',
     description: '普通员工。可以看到除权限页之外的所有页。',
     update_time: +Mock.Random.date('T'),
-    routes: routes.filter(i => i.path !== '/permission') // just a mock
+    routes: routes.filter(i => i.path !== '/permission' && i.path !== '/datecard') // just a mock
   },
   {
     key: 'visitor',
@@ -40,12 +40,12 @@ const roles = [
     description: '只是个访客,只能查看主页。',
     update_time: +Mock.Random.date('T'),
     routes: [{
-      path: '',
-      redirect: 'dashboard',
+      path: 'dashboard',
+      redirect: 'dashboard/index',
       children: [
         {
-          path: 'dashboard',
-          name: 'Dashboard',
+          path: 'index',
+          name: '首页',
           meta: { title: '首页', icon: 'dashboard' }
         }
       ]

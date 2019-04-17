@@ -57,7 +57,7 @@ meta: {
   title: 'title'             // 设置该路由在侧边栏和面包屑中展示的名字
   component: ()=>import('permission/index'),  //懒加载，直接指向页面的文件
   icon: 'svg-name'           // 设置该路由的图标
-  affix: true                // 如果设置为true, 这个tag将在tags-view，没有X关闭
+  affix: true                // 如果设置为true, 这个tag将被固定在tags-view，不可被删除
   noCache: true              // 如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
   breadcrumb: false          // 如果设置为false，则不会在breadcrumb面包屑中显示
 }

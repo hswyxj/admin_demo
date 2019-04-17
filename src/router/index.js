@@ -119,7 +119,6 @@ export const asyncRoutes = [
     path: '/permission',
     component: Layout,
     redirect: '/permission/index',
-    hidden: false,
     alwaysShow: true, // will always show the root menu
     meta: {
       title: '权限管理',
@@ -133,8 +132,8 @@ export const asyncRoutes = [
         name: 'RolePermission',
         hidden: false,
         meta: {
-          title: '角色管理',
-          roles: ['admin'] // or you can only set roles in sub nav
+          title: '角色菜单',
+          roles: ['admin', 'editor'] // or you can only set roles in sub nav
         }
       },
       {
@@ -144,17 +143,27 @@ export const asyncRoutes = [
         hidden: false,
         meta: {
           title: '用户管理',
-          roles: ['admin']
+          roles: ['admin', 'editor']
         }
       },
       {
         path: 'role_channel',
         component: () => import('@/views/permission/role_channel'),
-        name: 'UserchannelPermission',
+        name: 'RolechannelPermission',
         hidden: false,
         meta: {
           title: '渠道权限',
           // if do not set roles, means: this page does not require permission
+          roles: ['admin', 'editor']
+        }
+      },
+      {
+        path: 'role_data',
+        component: () => import('@/views/permission/role_data'),
+        name: 'RoledataPermission',
+        hidden: false,
+        meta: {
+          title: '数据权限',
           roles: ['admin']
         }
       }

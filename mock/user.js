@@ -1,4 +1,8 @@
+import { deepClone } from '../src/utils/index.js'
+import { asyncRoutes, constantRoutes } from './role/routes.js'
 
+// 深拷贝
+const routes = deepClone([...constantRoutes, ...asyncRoutes])
 const tokens = {
   admin: {
     token: 'admin-token'
@@ -17,21 +21,34 @@ const users = {
     password: 'admin_password',
     introduction: '超级管理员',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'admin'
+    name: 'admin',
+    routes: routes
   },
   'editor-token': {
     roles: ['editor'],
     password: 'editor_password',
     introduction: '普通员工',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'editor'
+    name: 'editor',
+    routes: routes // just a mock
   },
   'visitor-token': {
     roles: ['visitor'],
     password: 'visitor_password',
     introduction: '访客',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'visitor'
+    name: 'visitor',
+    routes: [{
+      path: '',
+      redirect: 'dashboard',
+      children: [
+        {
+          path: 'dashboard',
+          name: 'Dashboard',
+          meta: { title: '首页', icon: 'dashboard' }
+        }
+      ]
+    }]
   }
 
 }

@@ -60,7 +60,6 @@ const actions = {
         if (!roles || roles.length <= 0) { // 验证返回的roles是否是一个非空数组
           reject('getInfo: 角色必须是非零的数组!')
         }
-
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)

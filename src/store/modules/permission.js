@@ -1,6 +1,7 @@
 // import { asyncRoutes, constantRoutes } from '@/router'
 import { constantRoutes, generalRoutes } from '@/router'
-import { getRoutes } from '@/api/role'
+import { getInfo } from '@/api/user'
+import { getToken } from '@/utils/auth'
 
 const _import = path => () => import(`@/views/${path}`)
 
@@ -67,9 +68,9 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes
-      getRoutes().then(res => {
-        const asyncRoutes = res.data
-        // console.log(asyncRoutes)
+      getInfo(getToken()).then(res => {
+        const asyncRoutes = res.data.routes
+        // console.log(res.data)
         if (roles.includes('admin')) {
           accessedRoutes = mapAsyncRoutes(asyncRoutes).concat(generalRoutes)
         } else {

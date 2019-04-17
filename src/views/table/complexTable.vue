@@ -92,12 +92,9 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate({row})">编辑</el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus({row},'published')">发布
-          </el-button>
-          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus({row},'draft')">草稿
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus({row},'deleted')">删除
-          </el-button>
+          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus({row},'published')">发布</el-button>
+          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus({row},'draft')">草稿</el-button>
+          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus({row},'deleted')">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -270,10 +267,9 @@ export default {
       // this.listQuery.page = 1
       this.getList()
     },
-    handleModifyStatus(row, status) {
+    handleModifyStatus({ row }, status) {
       // console.log(status)
       if (status === 'deleted') {
-        console.log(status)
         this.handleDelete(row)
       } else {
         // this.$message({
@@ -321,6 +317,7 @@ export default {
         if (valid) {
           this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
           this.temp.author = 'test'
+          this.temp.reviewer = 'test'
           createArticle(this.temp).then(() => {
             this.list.unshift(this.temp) // unshift添加数据
             this.dialogFormVisible = false
