@@ -123,13 +123,30 @@ npm run lint -- --fix
 ```
 
 
-# 移除mock 用实际接口
- - 部分mock部分实际接口，只要把mock/api.js对应接口拦截接口注释即可。
- 例如：
+# 移除mock 用实际接口(目前更新版本)
+- 部分mock部分实际接口，只要把mock/api.js对应接口拦截接口注释即可。
+```
+// {
+//   url: '/article/detail',
+//   type: 'get',
+//   response: config => {
+//     const { id } = config.query
+//     for (const article of List) {
+//       if (article.id === +id) {
+//         return {
+//           code: 20000,
+//           data: article
+//         }
+//       }
+//     }
+//   }
+// }
+```
 
- - 如果要全部移除mock数据，只需要在 @/src/main.js 中移除 import { mockXHR } from '../mock' 并且删除mock目录下的文件。
-
-
+- 如果要全部移除mock数据，只需要：
+  - 注释vue.config.js--proxy属性
+  - 移除src/main.js 中 import { mockXHR } from '../mock' 
+  - 删除mock目录下的文件。
 
 # 代码规范 ESLint（最好使用eslint+vscode 来写vue）
 
