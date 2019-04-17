@@ -118,7 +118,7 @@ export const asyncRoutes = [
   {
     path: '/permission',
     component: Layout,
-    redirect: '/permission/index',
+    redirect: '/permission/role',
     alwaysShow: true, // will always show the root menu
     meta: {
       title: '权限管理',

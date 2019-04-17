@@ -4,13 +4,20 @@ import Layout from '@/views/layout/index'
 
 const tableRouter =
 {
-  path: '/example',
+  path: '/table',
   component: Layout,
-  redirect: '/example/table',
-  name: 'Example',
+  redirect: '/table/complex-table',
+  name: 'table',
   hidden: false,
   meta: { title: '模板例子', icon: 'list' },
   children: [
+    {
+      path: 'complex-table',
+      name: 'complexTable',
+      hidden: false,
+      component: () => import('@/views/table/complexTable'),
+      meta: { title: '综合模板' }
+    },
     {
       path: 'table',
       name: 'Table',
@@ -24,13 +31,6 @@ const tableRouter =
       hidden: false,
       component: () => import('@/views/tree/index'),
       meta: { title: '树形模板' }
-    },
-    {
-      path: 'complex-table',
-      name: 'complexTable',
-      hidden: false,
-      component: () => import('@/views/table/complexTable'),
-      meta: { title: '综合模板' }
     }
   ]
 }
