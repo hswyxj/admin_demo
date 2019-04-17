@@ -145,8 +145,14 @@ npm run lint -- --fix
 
 - 如果要全部移除mock数据，只需要：
   - 注释vue.config.js--proxy属性
-  - 移除src/main.js 中 import { mockXHR } from '../mock' 
+  - 移除src/main.js 中
+  ```
+  import { mockXHR } from '../mock'
+  if (process.env.NODE_ENV === 'production') { mockXHR() }
+  ```
+
   - 删除mock目录下的文件。
+
 
 # 代码规范 ESLint（最好使用eslint+vscode 来写vue）
 
