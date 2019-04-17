@@ -53,7 +53,7 @@ component:Layout             //加载Layout
 
 name: 'router-name'          // 设定路由的名字，一定要填写不然使用<keep-alive>时会出现各种问题
 meta: {
-  roles: ['admin', 'editor'] // 设置该路由进入的权限，支持多个权限叠加（该字段保留，可作为按钮权限的关键字段）
+  roles: ['admin', 'editor'] // 设置该路由进入的权限，支持多个权限叠加（该字段保留）
   title: 'title'             // 设置该路由在侧边栏和面包屑中展示的名字
   component: ()=>import('permission/index'),  //懒加载，直接指向页面的文件
   icon: 'svg-name'           // 设置该路由的图标
@@ -235,7 +235,6 @@ setting.json：
 - │   ├── directive              // 全局指令
 - │   ├── filters                // 全局过滤 filter
 - │   ├── icons                  // 项目所有 svg icons
-- │   ├── layout                 // 全局 layout
 - │   ├── router                 // 路由配置
 - │   ├── store                  // 全局 store管理（状态管理）
 - │   ├── styles                 // 全局样式
@@ -249,6 +248,7 @@ setting.json：
 - │   ├── utils                  // 全局公用方法
 - │   ├── vendor                 // 公用vendor
 - │   ├── views                  // views 所有页面
+- │   │   ├── layout                   // 全局 layout
 - │   ├── App.vue                // 入口页面
 - │   ├── main.js                // 入口文件 加载组件 初始化等
 - │   └── permission.js          // 权限管理

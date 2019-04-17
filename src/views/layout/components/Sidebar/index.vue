@@ -2,7 +2,6 @@
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <logo :collapse="isCollapse" />
     <el-menu
-      v-permission="['admin']"
       :default-active="activeMenu"
       :collapse="isCollapse"
       :background-color="variables.menuBg"
