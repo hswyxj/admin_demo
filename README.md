@@ -34,7 +34,7 @@
 集成方案: [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
 ## 说明
-- 1、目前项目登录已经添加服务端返回权限菜单列表
+- 1、目前项目登录已经添加服务端返回权限菜单列表（但是本地代码router目录下也要保存一份用于本地缓存路径，标签功能需要）
 - 2、服务端权限菜单列表格式查看mock/role/routes.js 的数据格式返回
 - 3、权限菜单路由配置主要字段说明：
 ```
@@ -124,34 +124,32 @@ npm run lint -- --fix
 
 
 # 移除mock 用实际接口(目前更新版本)
-- 部分mock部分实际接口，只要把mock/api.js对应接口拦截接口注释即可。
-```
-// {
-//   url: '/article/detail',
-//   type: 'get',
-//   response: config => {
-//     const { id } = config.query
-//     for (const article of List) {
-//       if (article.id === +id) {
-//         return {
-//           code: 20000,
-//           data: article
-//         }
-//       }
-//     }
-//   }
-// }
-```
-
-- 如果要全部移除mock数据，只需要：
-  - 注释vue.config.js--proxy属性
-  - 移除src/main.js 中
+- 部分mock+部分实际接口，只要把mock/api.js对应接口拦截接口注释即可。
+  - 例如：article的api，接口fetchArticle：也就是url: '/article/detail'不引用mock直接用实际接口，只要注释mock/article.js的url: '/article/detail'的接口信息，如下
   ```
-  import { mockXHR } from '../mock'
-  if (process.env.NODE_ENV === 'production') { mockXHR() }
+  注：api的接口url跟mock的url要对应上才能模拟mock数据哦，注释也同理
+  // {
+  //   url: '/article/detail',
+  //   type: 'get',
+  //   response: config => {
+  //     const { id } = config.query
+  //     for (const article of List) {
+  //       if (article.id === +id) {
+  //         return {
+  //           code: 20000,
+  //           data: article
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   ```
 
-  - 删除mock目录下的文件。
+- 如果要全部不引用mock数据，只需要：
+  - 注释vue.config.js--after属性
+  ```
+   // after: require('./mock/mock-server.js')
+  ```
 
 
 # 代码规范 ESLint（最好使用eslint+vscode 来写vue）
