@@ -51,7 +51,8 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true
+    hidden: true,
+    meta: { title: '登录' }
   },
   {
     path: '/auth-redirect',
@@ -61,12 +62,14 @@ export const constantRoutes = [
   {
     path: '/404',
     component: () => import('@/views/errorPage/404'),
-    hidden: true
+    hidden: true,
+    meta: { title: '404' }
   },
   {
     path: '/401',
     component: () => import('@/views/errorPage/401'),
-    hidden: true
+    hidden: true,
+    meta: { title: '401' }
   },
   {
     path: '',
