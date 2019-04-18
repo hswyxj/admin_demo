@@ -20,7 +20,7 @@ const users = {
     roles: ['admin'],
     password: 'admin_password',
     introduction: '超级管理员',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar: 'static/img/card/user-avatar.gif',
     name: 'admin',
     routes: routes
   },
@@ -28,7 +28,7 @@ const users = {
     roles: ['editor'],
     password: 'editor_password',
     introduction: '普通员工',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar: 'static/img/card/user-avatar.gif',
     name: 'editor',
     routes: routes // just a mock
   },
@@ -36,7 +36,7 @@ const users = {
     roles: ['visitor'],
     password: 'visitor_password',
     introduction: '访客',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar: 'static/img/card/user-avatar.gif',
     name: 'visitor',
     routes: [{
       path: '',
