@@ -18,6 +18,30 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   {
+    path: '/datecard',
+    component: 'layout/index',
+    children: [
+      {
+        path: 'index',
+        name: 'datecard',
+        component: 'datecard/datecard',
+        meta: { title: '卡片展示', icon: 'list' }
+      }
+    ]
+  },
+  {
+    path: '/iphone',
+    component: 'layout/index',
+    children: [
+      {
+        path: 'index',
+        name: 'iphone',
+        component: 'iphone/iphone',
+        meta: { title: '手机模型', icon: 'list' }
+      }
+    ]
+  },
+  {
     path: '/nested',
     component: 'layout/index',
     name: 'Nested',
@@ -91,10 +115,16 @@ export const asyncRoutes = [
         meta: { title: '综合模板' }
       },
       {
-        path: 'test_table',
-        name: 'test_table',
-        component: 'table/test_table',
-        meta: { title: '测试模板' }
+        path: 'table',
+        name: 'Table',
+        component: 'table/inlineEditTable',
+        meta: { title: '表内编辑' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: 'tree/index',
+        meta: { title: '树形模板' }
       }
     ]
   },

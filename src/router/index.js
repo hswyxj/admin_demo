@@ -98,6 +98,19 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/iphone',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        name: 'iphone',
+        component: () => import('@/views/iphone/iphone'),
+        meta: { title: '手机模型', icon: 'list' }
+      }
+    ]
+  },
   /** when your routing map is too long, you can split it into small modules **/
   nestedRouter,
   tableRouter,
