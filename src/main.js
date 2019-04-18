@@ -17,7 +17,6 @@ import './icons' // icon
 import './permission' // permission control
 
 import * as filters from './filters' // global filters
-import { mockXHR } from '../mock'
 
 /**
  * If you don't want to use mock-server
@@ -28,9 +27,10 @@ import { mockXHR } from '../mock'
  * mockXHR()
  */
 
-// 在线demo使用，实际项目可去掉
-if (process.env.NODE_ENV === 'production') {
-  mockXHR()// simulation data
+// 上生产build后不会引用mock数据，测试的时候想要全部引用实际接口注释调即可
+import { mockXHR } from '../mock'
+if (process.env.NODE_ENV === 'development') {
+  mockXHR() // simulation data
 }
 
 Vue.use(Element, {

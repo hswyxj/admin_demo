@@ -146,9 +146,13 @@ npm run lint -- --fix
   ```
 
 - 如果要全部不引用mock数据，只需要：
-  - 注释vue.config.js--after属性即可（切记不可删除mock目录以及相关代码，后续前端开发还需要mock）
+  - 注释main.js--mock引用即可（切记不可删除mock目录以及相关代码，后续前端开发还需要mock）
   ```
-   // after: require('./mock/mock-server.js')
+  // 上生产build后不会引用mock数据，测试的时候想要全部引用实际接口注释调即可
+  import { mockXHR } from '../mock'
+  if (process.env.NODE_ENV === 'development') {
+      mockXHR() // simulation data
+  }
   ```
 
 
