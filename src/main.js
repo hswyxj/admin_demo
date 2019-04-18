@@ -17,6 +17,7 @@ import './icons' // icon
 import './permission' // permission control
 
 import * as filters from './filters' // global filters
+import { mockXHR } from '../mock'
 
 /**
  * If you don't want to use mock-server
@@ -26,6 +27,11 @@ import * as filters from './filters' // global filters
  * import { mockXHR } from '../mock'
  * mockXHR()
  */
+
+// 在线demo使用，实际项目可去掉
+if (process.env.NODE_ENV === 'production') {
+  mockXHR()// simulation data
+}
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
