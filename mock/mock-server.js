@@ -1,6 +1,9 @@
 const chokidar = require('chokidar')
 const bodyParser = require('body-parser')
 const chalk = require('chalk')
+const path = require('path')
+const mockDir = path.join(process.cwd(), 'mock') // //指定需要加载的目录,process.cwd()返回的是当前js进程执行时的工作目录
+// path.join(path1，path2，path3.......)作用：将路径片段使用特定的分隔符（window：\）连接起来形成路径，并规范化生成的路径。若任意一个路径片段类型错误，会报错。
 
 function registerRoutes(app) {
   let mockLastIndex
@@ -18,7 +21,7 @@ function registerRoutes(app) {
 
 function unregisterRoutes() {
   Object.keys(require.cache).forEach(i => {
-    if (i.includes('/mock') || i.includes('\\mock') || i.includes('./mock')) {
+    if (i.includes(mockDir)) {
       delete require.cache[require.resolve(i)]
     }
   })
@@ -40,8 +43,8 @@ module.exports = app => {
   var mockStartIndex = mockRoutes.mockStartIndex
 
   // watch files, hot reload mock server
-  chokidar.watch(('./mock'), {
-    ignored: 'mock/mock-server.js',
+  chokidar.watch((mockDir), {
+    // ignored: /mock-server/,
     persistent: true,
     ignoreInitial: true
   }).on('all', (event, path) => {
