@@ -146,7 +146,7 @@ npm run lint -- --fix
   ```
 
 - 如果要全部不引用mock数据，只需要：
-  - 注释vue.config.js--after属性
+  - 注释vue.config.js--after属性即可（切记不可删除mock目录以及相关代码，后续前端开发还需要mock）
   ```
    // after: require('./mock/mock-server.js')
   ```

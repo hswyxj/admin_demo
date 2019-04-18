@@ -1,8 +1,6 @@
 <template>
-  <div class="app-container">
-    <div>
-      <Iphone :option="easyDataOption0" />
-    </div>
+  <div>
+    <Iphone :option="easyDataOption0" />
   </div>
 </template>
 
