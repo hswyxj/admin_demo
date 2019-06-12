@@ -1,80 +1,76 @@
 
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <div class="title-container">
-        <h3 class="title">
-          后台管理系统
-        </h3>
-      </div>
+    <div class="login-main">
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+        <div class="title-container">
+          <h3 class="title">
+            投放管理平台
+          </h3>
+        </div>
 
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="用户账号"
-          name="username"
-          type="text"
-          auto-complete="on"
-          clearable
-        />
-      </el-form-item>
-
-      <el-tooltip v-model="capsTooltip" content="大写锁定已开启" placement="right" manual>
-        <el-form-item prop="password">
+        <el-form-item prop="username">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <svg-icon icon-class="user" />
           </span>
           <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            placeholder="用户密码"
-            name="password"
+            ref="username"
+            v-model="loginForm.username"
+            placeholder="用户账号"
+            name="username"
+            type="text"
             auto-complete="on"
             clearable
-            show-password
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
           />
         </el-form-item>
-      </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
-        登 录
-      </el-button>
+        <el-tooltip v-model="capsTooltip" content="大写锁定已开启" placement="right" manual>
+          <el-form-item prop="password">
+            <span class="svg-container">
+              <svg-icon icon-class="password" />
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password"
+              v-model="loginForm.password"
+              :type="passwordType"
+              placeholder="用户密码"
+              name="password"
+              auto-complete="on"
+              clearable
+              show-password
+              @keyup.native="checkCapslock"
+              @blur="capsTooltip = false"
+              @keyup.enter.native="handleLogin"
+            />
+          </el-form-item>
+        </el-tooltip>
 
-      <div style="position:relative">
+        <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
+          登 录
+        </el-button>
+
         <div class="tips">
           <span>超级管理账号 : admin</span>
-          <span>密码 : admin_password</span>
+          <span>密码 : Test123123</span>
         </div>
-        <div class="tips">
-          <span style="margin-right:18px;">
-            普通员工账号 : editor
-          </span>
-          <span>密码 : editor_password</span>
-        </div>
-      </div>
-    </el-form>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
-// import { validUsername } from '@/utils/validate'
+import { validNumAlphabets } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     // 自定义验证
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 8) {
-        callback(new Error('密码不能少于8位'))
+      if (!value) {
+        callback(new Error('请输入账号密码'))
+      } else if (!validNumAlphabets(value)) {
+        callback(new Error('大小写字母+数字组合,不少于8位'))
       } else {
         callback()
       }
@@ -82,7 +78,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: 'admin_password'
+        password: 'Test123123'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入正确的用户名' },
@@ -157,8 +153,10 @@ export default {
   /* 修复input 背景不协调 和光标变色 */
   /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 $bg:#283443;
-$light_gray:#fff;
-$cursor: #fff;
+// $light_gray:#fff;
+// $cursor: #fff;
+$light_gray:#787982;
+$cursor:#787982;
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
     color: $cursor;
@@ -171,18 +169,18 @@ $cursor: #fff;
       height: 47px;
       width: 85%;
       input {
-      background: transparent;
+      // background: transparent;
       border: 0px;
       -webkit-appearance: none;
-      border-radius: 0px;
+      border-radius: 5px;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
       }
     }
     .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgb(214, 214, 216);
+    // background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
   }
@@ -196,20 +194,30 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  // background-color: url(../../assets/login.png);
+  background-image: url(../../assets/top_images/login.png);
+  background-size: cover;
   overflow: hidden;
+  .login-main{
+    border-radius: 16px;
+    padding: 15% 50px 25px 50px;
+  }
   .login-form {
     position: relative;
-    width: 450px;
+    left:25%;
+    width: 400px;
     max-width: 100%;
-    padding: 210px 35px 0;
+    padding: 35px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
   }
   .tips {
     font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
+    color: $dark_gray;
+    margin-bottom:30px;
     span {
       &:first-of-type {
         margin-right: 16px;
@@ -227,18 +235,10 @@ $light_gray:#eee;
     position: relative;
     .title {
       font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
+      color: $dark_gray;
+      margin: 0px auto 35px auto;
       text-align: center;
       font-weight: bold;
-    }
-    .set-language {
-      color: #fff;
-      position: absolute;
-      top: 3px;
-      font-size:18px;
-      right: 0px;
-      cursor: pointer;
     }
   }
   .show-pwd {
