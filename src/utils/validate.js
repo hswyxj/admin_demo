@@ -64,6 +64,47 @@ export function validAlphabets(str) {
   return reg.test(str)
 }
 
+/* 数字*/
+/**
+ * @param {string} str
+ * @returns {Boolean}
+ */
+export function validNumbers(str) {
+  const reg = /^[0-9]+$/
+  return reg.test(str)
+}
+
+/* 包含大小写字母和数字 */
+/**
+ * @param {string} str
+ * @returns {Boolean}
+ */
+export function validNumAlphabets(str) {
+  // const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[1-9])[a-zA-Z\d_@\.]{8,30}$/
+  const reg = /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d_@\.]{8,30}$/
+  return reg.test(str)
+}
+
+/* 包含特殊字符 */
+/**
+ * @param {string} str
+ * @returns {Boolean}
+ */
+export function validSpecial(str) {
+  const reg = /^(?=.*[\W]).{0,}$/
+  return reg.test(str)
+}
+
+/* 包含数字、大小写字母和特殊符号 */
+/**
+ * @param {string} str
+ * @returns {Boolean}
+ */
+export function validNumAlphaSpecial(str) {
+  const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[1-9])(?=.*[\W]).{6,}$/
+  return reg.test(str)
+}
+
 /**
  * validate email
  * @param {string} email
@@ -94,4 +135,47 @@ export function isArray(arg) {
     return Object.prototype.toString.call(arg) === '[object Array]'
   }
   return Array.isArray(arg)
+}
+
+/**
+ * validate ip
+ * @param {string} ip
+ * @returns {Boolean}
+ */
+export function validIP(ip) {
+  const reg = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/
+  return reg.test(ip)
+}
+
+/**
+ * validate JSON
+ * @param {string} JSON
+ * @returns {Boolean}
+ */
+export function isJSON(str) {
+  if (typeof str === 'string') {
+    try {
+      var obj = JSON.parse(str)
+      if (typeof obj === 'object' && obj) {
+        return true
+      } else {
+        return false
+      }
+    } catch (e) {
+      console.log('isJSONerror：' + str + '!!!' + e)
+      return false
+    }
+  }
+  console.log('isJSON:It is not a string!')
+}
+
+/* 包含[] */
+/**
+ * validate Arraystr
+ * @param {string} str
+ * @returns {Boolean}
+ */
+export function validArraystr(str) {
+  const reg = /^[[\s\S]{1,}]$/
+  return reg.test(str)
 }

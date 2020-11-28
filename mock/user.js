@@ -18,7 +18,7 @@ const tokens = {
 const users = {
   'admin-token': {
     roles: ['admin'],
-    password: 'admin_password',
+    password: 'Test123123',
     introduction: '超级管理员',
     avatar: 'static/img/card/user-avatar.gif',
     name: 'admin',
@@ -26,7 +26,7 @@ const users = {
   },
   'editor-token': {
     roles: ['editor'],
-    password: 'editor_password',
+    password: 'Test123123',
     introduction: '普通员工',
     avatar: 'static/img/card/user-avatar.gif',
     name: 'editor',
@@ -34,7 +34,7 @@ const users = {
   },
   'visitor-token': {
     roles: ['visitor'],
-    password: 'visitor_password',
+    password: 'Test123123',
     introduction: '访客',
     avatar: 'static/img/card/user-avatar.gif',
     name: 'visitor',
