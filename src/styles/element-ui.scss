@@ -83,3 +83,13 @@
     display: block
   }
 }
+
+// el-table__header
+.el-table__header tr,
+  .el-table__header th {
+    font-size: 14px;
+    padding: 0;
+    height: 45px;
+    background:#42b983;
+    color: white;
+}
