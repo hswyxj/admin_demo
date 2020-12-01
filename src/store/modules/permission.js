@@ -1,9 +1,10 @@
-// import { asyncRoutes, constantRoutes } from '@/router'
 import { constantRoutes, generalRoutes } from '@/router'
 import { getInfo } from '@/api/user'
 import { getToken } from '@/utils/auth'
 
-const _import = path => () => import(`@/views/${path}`)
+export const _import = (path) => { // 路由懒加载
+  return () => Promise.resolve(require(`@/views/${path}`).default)
+}
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
