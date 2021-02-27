@@ -72,7 +72,7 @@ meta: {
 另外因为 node-sass 是依赖 python环境的，如果你之前没有安装和配置过的话，需要自行查看一下相关安装教程。
 
 ## 在线demo展示
-https://hswyxj.github.io/admin_demo/
+https://hswyxj.github.io/admin_demo/index.html
 
 
 ## 开发
